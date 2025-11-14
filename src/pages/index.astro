@@ -7,11 +7,11 @@ const models = getAllModels();
 const base = import.meta.env.BASE_URL || '/';
 ---
 
-<Layout title="Maquette" description="Catalogue documenté de maquettes statiques.">
+<Layout title="Toton Maquette" description="Catalogue documenté de maquettes statiques.">
 <SiteChrome>
 	<section class="hero">
 		<div>
-			<p class="eyebrow">Atelier Maquette</p>
+			<p class="eyebrow">Atelier Toton Maquette</p>
 			<h1>Documentation experte pour maquettes statiques</h1>
 			<p>
 				Chaque fiche synthétise le contexte du modèle réel, l’inventaire du matériel indispensable,
@@ -74,7 +74,7 @@ const base = import.meta.env.BASE_URL || '/';
 			{models.map((model) => (
 				<article class="model-card">
 					<div>
-						<p class="eyebrow">{model.manufacturer || 'Maquette'}</p>
+						<p class="eyebrow">{model.manufacturer || 'Toton Maquette'}</p>
 						<h2>{model.modelName}</h2>
 						{model.reference && <p class="muted">Référence {model.reference}</p>}
 						<p>{model.summary || 'Consulte la fiche pour découvrir le contenu complet.'}</p>
