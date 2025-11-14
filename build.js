@@ -90,13 +90,19 @@ function copyAssets() {
   });
 }
 
+function normalizePrefix(prefix) {
+  if (!prefix) return '';
+  return prefix.endsWith('/') ? prefix : `${prefix}/`;
+}
+
 function renderLayout({
   title,
   description = '',
   content,
   breadcrumbs = [],
-  basePath = '.',
+  basePath = '',
 }) {
+  const prefix = normalizePrefix(basePath);
   const breadcrumbHtml = breadcrumbs
     .map((crumb, index) => {
       if (!crumb.href || index === breadcrumbs.length - 1) {
@@ -113,14 +119,14 @@ function renderLayout({
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${title}</title>
     ${description ? `<meta name="description" content="${description}">` : ''}
-    <link rel="stylesheet" href="${basePath}/assets/styles.css">
+    <link rel="stylesheet" href="${prefix}assets/styles.css">
   </head>
   <body>
     <header class="site-header">
       <div class="container">
-        <a href="${basePath}/" class="brand">Perso Maquettes</a>
+        <a href="${basePath ? `${prefix}` : './'}" class="brand">Perso Maquettes</a>
         <nav>
-          <a href="${basePath}/">Accueil</a>
+          <a href="${basePath ? `${prefix}` : './'}">Accueil</a>
           <a href="https://github.com/lutin1675-source/maquettes" target="_blank" rel="noreferrer">GitHub</a>
         </nav>
       </div>
@@ -181,7 +187,7 @@ function buildHome(models) {
     title: 'Perso Maquettes',
     description: 'Documentation statique pour les maquettes de modèles réduits.',
     breadcrumbs: [{ label: 'Accueil' }],
-    basePath: '.',
+    basePath: '',
     content,
   });
 
