@@ -52,6 +52,7 @@ a:hover {
 	align-items: center;
 	justify-content: space-between;
 	padding: 1rem 1.5rem;
+	gap: 1.5rem;
 }
 
 .brand {
@@ -98,8 +99,20 @@ a:hover {
 	color: var(--muted);
 }
 
-.site-header nav a + a {
-	margin-left: 1rem;
+.main-nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	font-size: 0.95rem;
+}
+
+.main-nav a {
+	color: var(--muted);
+	font-weight: 600;
+}
+
+.main-nav a:hover {
+	color: var(--accent);
 }
 
 .hero {
