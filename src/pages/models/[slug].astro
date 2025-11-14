@@ -18,55 +18,64 @@ const base = import.meta.env.BASE_URL || '/';
 ---
 
 <Layout title={pageTitle} description={model.summary}>
-	<SiteChrome>
-		<div class="breadcrumbs">
-			<a href={base}>Accueil</a>
-			<span class="crumb-sep">/</span>
+	<SiteChrome className="space-y-10">
+		<nav class="text-xs uppercase tracking-[0.3em] text-base-content/60">
+			<a class="a-01" href={base}>Accueil</a>
+			<span class="px-2 text-base-content/40">/</span>
 			<span>{model.modelName}</span>
-		</div>
+		</nav>
 
-		<section class="model-hero">
-			<div>
-				<p class="eyebrow">{model.manufacturer || 'Toton Maquette'}</p>
-				<h1>{model.modelName}</h1>
-				{model.reference && (
-					<p class="muted">
-						Référence <strong>{model.reference}</strong>
-					</p>
-				)}
+		<section class="grid gap-6 rounded-[2rem] border border-base-300 bg-base-100 p-8 shadow-sm md:grid-cols-2">
+			<div class="space-y-2">
+				<p class="brand-pill text-base-content/60">{model.manufacturer || 'Toton Maquette'}</p>
+				<h1 class="text-4xl leading-tight">{model.modelName}</h1>
+				{model.reference && <p class="text-base-content/60">Référence {model.reference}</p>}
+				<p class="text-base-content/70">
+					{model.summary ||
+						'Retrouve dans cette fiche tout l’historique pertinent, les références de peinture fiables et les corrections atelier recommandées.'}
+				</p>
 			</div>
-			<div>
-				<ul class="meta-list">
-					<li>
-						<span>Slug</span>
-						{model.slug}
+			<div class="rounded-2xl border border-base-200 bg-base-200/40 p-5">
+				<ul class="space-y-2 text-sm">
+					<li class="flex items-center justify-between border-b border-base-200 pb-2">
+						<span class="text-base-content/60">Slug</span>
+						<span class="font-semibold">{model.slug}</span>
 					</li>
-					<li>
-						<span>Dossiers</span>
-						{model.docs.length}
+					<li class="flex items-center justify-between border-b border-base-200 pb-2">
+						<span class="text-base-content/60">Sections documentées</span>
+						<span class="font-semibold">{model.docs.length}</span>
+					</li>
+					<li class="flex items-center justify-between">
+						<span class="text-base-content/60">Dernière mise à jour</span>
+						<span class="font-semibold">{new Date().toLocaleDateString('fr-FR')}</span>
 					</li>
 				</ul>
+				<a class="btn btn-primary btn-block mt-4" href="mailto:bonjour@toton-maquette.com">
+					Partager un retour de montage
+				</a>
 			</div>
 		</section>
 
-		<aside class="local-nav">
-			<h2>Sections</h2>
-			<ul>
+		<aside class="rounded-2xl border border-base-300 bg-base-100 p-6 shadow-sm">
+			<p class="section-label">Sections</p>
+			<ul class="mt-4 space-y-2">
 				{model.docs.map((doc) => (
 					<li>
-						<a href={`#${slugifyText(doc.title)}`}>{doc.title}</a>
+						<a class="a-01 font-semibold" href={`#${slugifyText(doc.title)}`}>{doc.title}</a>
 					</li>
 				))}
 			</ul>
 		</aside>
 
 		{model.docs.map((doc) => (
-			<section id={slugifyText(doc.title)}>
-				<div class="section-head">
-					<h2>{doc.title}</h2>
-					<a href={`#${slugifyText(doc.title)}`} aria-label={`Lien vers ${doc.title}`}>#</a>
+			<section id={slugifyText(doc.title)} class="scroll-mt-32 rounded-[2rem] border border-base-300 bg-base-100 p-8 shadow-sm">
+				<div class="mb-6 flex items-center justify-between gap-4">
+					<h2 class="text-3xl">{doc.title}</h2>
+					<a class="text-sm uppercase tracking-[0.3em] text-primary" href={`#${slugifyText(doc.title)}`} aria-label={`Lien vers ${doc.title}`}>
+						#
+					</a>
 				</div>
-				<div set:html={doc.html} />
+				<div class="prose prose-neutral max-w-none" set:html={doc.html} />
 			</section>
 		))}
 	</SiteChrome>

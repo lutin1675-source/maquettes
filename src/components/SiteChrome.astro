@@ -1,45 +1,73 @@
 ---
+import { SITE, NAV_LINKS, FOOTER_LINKS } from '../lib/site';
+
 const { className: customClass = '' } = Astro.props;
 const base = import.meta.env.BASE_URL || '/';
 const year = new Date().getFullYear();
 ---
 
-<header class="site-header">
-	<div class="container">
-		<a class="brand logo" href={base}>
-			<span class="icon">✈︎</span>
-			<span class="logo-text">
-				<span class="logo-title">Toton Maquette</span>
-				<span class="slogan">Notre passion</span>
-			</span>
-		</a>
-		<nav class="main-nav">
-			<a href={`${base}atelier-technique/`}>Atelier Technique</a>
-			<a href={`${base}dossiers-hangar/`}>Dossiers Hangar</a>
-			<a href={`${base}revues-kits/`}>Revues & Kits</a>
-			<a href={`${base}vie-de-club/`}>Vie de Club</a>
-			<a href={`${base}ressources/`}>Ressources</a>
+<div class="flex min-h-screen flex-col bg-base-200 text-base-content">
+	<header class="bg-base-100 shadow-sm">
+		<div class="bg-primary text-primary-content">
+			<div class="container flex flex-wrap items-center justify-between gap-3 px-4 py-2 text-xs sm:text-sm">
+				<p class="tracking-[0.3em] uppercase">{SITE.tagline}</p>
+				<a class="font-semibold hover:underline" href={`mailto:${SITE.email}`}>Contact {SITE.email}</a>
+			</div>
+		</div>
+
+		<div class="container flex flex-wrap items-center gap-6 px-4 py-5">
+			<a class="flex items-center gap-4 text-base-content" href={base}>
+				<span class="text-4xl lg:text-5xl">✈︎</span>
+				<div>
+					<p class="font-serif text-2xl leading-tight lg:text-3xl">{SITE.title}</p>
+					<p class="text-sm font-semibold uppercase tracking-[0.35em] text-base-content/60">Maquettes statiques</p>
+				</div>
+			</a>
+			<nav class="ml-auto hidden flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.3em] lg:flex">
+				{NAV_LINKS.map((link) => (
+					<a class="hover:text-primary transition-colors" href={`${base}${link.href}`}>{link.label}</a>
+				))}
+			</nav>
+			<a class="btn btn-primary btn-sm tracking-wide uppercase" href={`${base}models/`}>Catalogue</a>
+		</div>
+
+		<nav class="container flex flex-wrap gap-3 px-4 pb-4 text-[0.7rem] font-semibold uppercase tracking-[0.32em] lg:hidden">
+			{NAV_LINKS.map((link) => (
+				<a class="text-base-content/80" href={`${base}${link.href}`}>{link.label}</a>
+			))}
 		</nav>
-	</div>
-</header>
+	</header>
 
-<main class={`container ${customClass}`}>
-	<slot />
-</main>
+	<main class={`container flex-1 px-4 py-10 ${customClass}`}>
+		<slot />
+	</main>
 
-<footer class="site-footer">
-	<div class="container footer-grid">
-		<div>
-			<p>© {year} Toton Maquette. Tous droits réservés.</p>
+	<footer class="border-t border-base-300 bg-base-100">
+		<div class="container grid gap-8 px-4 py-10 md:grid-cols-[2fr,3fr]">
+			<div class="space-y-3">
+				<p class="text-2xl font-serif">{SITE.title}</p>
+				<p class="text-base-content/70">{SITE.description}</p>
+				<div class="text-sm text-base-content/70">
+					<p>© {year} {SITE.title}</p>
+					<p>Contact : <a class="a-01" href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+				</div>
+			</div>
+			<div class="grid gap-6 sm:grid-cols-3">
+				{FOOTER_LINKS.map((group) => (
+					<div>
+						<p class="text-sm font-semibold uppercase tracking-[0.3em] text-base-content/60">{group.title}</p>
+						<ul class="mt-3 space-y-2 text-sm text-base-content/80">
+							{group.items.map((item) => (
+								<li>
+									<a class="a-01" href={item.href.startsWith('http') || item.href.startsWith('mailto') ? item.href : `${base}${item.href}`}>
+										{item.label}
+									</a>
+								</li>
+							))}
+						</ul>
+					</div>
+				))}
+			</div>
 		</div>
-		<div>
-			<a href={`${base}cgu/`}>Conditions Générales d'Utilisation</a>
-		</div>
-		<div class="footer-contact">
-			<p>
-				Contact : <a href="mailto:bonjour@toton-maquette.com">bonjour@toton-maquette.com</a><br />
-				N'hésitez pas à nous partager vos idées ou besoins documentaires, nous répondons rapidement.
-			</p>
-		</div>
-	</div>
-</footer>
+	</footer>
+</div>

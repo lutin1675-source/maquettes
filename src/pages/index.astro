@@ -5,108 +5,138 @@ import { getAllModels } from '../lib/models';
 
 const models = getAllModels();
 const base = import.meta.env.BASE_URL || '/';
+const featuredModel = models[0];
+const methodology = [
+	{
+		title: 'Historique vérifié',
+		copy:
+			'Nous recoupons archives constructeur, rapports d’exploitants et dossiers IPMS pour valider les dates, sous-versions et livrées.',
+	},
+	{
+		title: 'Sourcing matériel',
+		copy:
+			'Peintures, apprêts et consommables sont listés avec références FS/RAL et équivalences commercialisées en France/UE.',
+	},
+	{
+		title: 'Visuels de référence',
+		copy:
+			'Walkarounds officiels, photos spotters sous licence et plans permettent de placer chaque antenne, correction ou patine.',
+	},
+	{
+		title: 'Conseils atelier',
+		copy:
+			'Les retours de montage (clubs, concours, forums) sont synthétisés en checklists pour anticiper ajustements et séquences de peinture.',
+	},
+];
 ---
 
 <Layout title="Toton Maquette" description="Catalogue documenté de maquettes statiques.">
-<SiteChrome>
-	<section class="hero">
-		<div>
-			<p class="eyebrow">Atelier Toton Maquette</p>
-			<h1>Documentation experte pour maquettes statiques</h1>
-			<p>
-				Chaque fiche synthétise le contexte du modèle réel, l’inventaire du matériel indispensable,
-				les visuels de référence et les gestes atelier. Nous documentons chaque point à partir de notices constructeur,
-				retours IPMS ou clubs de maquettistes et archives de compagnies aériennes.
-			</p>
-			<div class="hero-cta">
-				<a class="btn" href={`${base}models/${models[0]?.slug ?? ''}/`}>Consulter une fiche</a>
-				<span>Catalogue mis à jour au fil des montages</span>
-			</div>
-		</div>
-		<div class="hero-panel">
-			<h2>Méthode éditoriale</h2>
-			<ol>
-				<li>Recherche historique : dossiers constructeur, archives d’unités, compagnies civiles.</li>
-				<li>Recensement des teintes et produits réellement disponibles en France/UE.</li>
-				<li>Analyse des montages publiés (IPMS, Britmodeller, réseaux de clubs).</li>
-				<li>Compilation des visuels et synthèse en checklist claire.</li>
-			</ol>
-		</div>
-	</section>
+	<SiteChrome className="space-y-12">
+		<section class="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+			<article class="rounded-[2rem] border border-base-300 bg-base-100 p-8 shadow-sm">
+				<p class="section-label">Observatoire Toton</p>
+				<h1 class="mt-3 text-4xl leading-tight text-base-content lg:text-5xl">
+					Briefings techniques prêts à l’emploi pour maquettistes exigeants
+				</h1>
+				<p class="mt-6 text-lg text-base-content/80">
+					Chaque fiche compile historique, inventaire matériel, visuels de référence et gestes atelier. Les sources sont
+					systématiquement vérifiées (constructeurs, IPMS, clubs, photothèques officielles) avant publication.
+				</p>
+				<div class="mt-8 flex flex-wrap items-center gap-4 text-sm font-semibold uppercase tracking-[0.3em] text-base-content/60">
+					<a class="btn btn-primary btn-wide tracking-[0.2em]" href={`${base}models/`}>
+						Consulter le catalogue
+					</a>
+					<span>Catalogue mis à jour à chaque montage</span>
+				</div>
+			</article>
 
-	<section class="info-grid">
-		<article>
-			<h3>Dossiers historiques</h3>
-			<p>
-				Chaque fiche replace la maquette dans l’histoire du programme réel : dates clés, évolutions techniques, compagnies
-				utilisatrices, points particuliers de la version reproduite.
-			</p>
-		</article>
-		<article>
-			<h3>Matériel validé</h3>
-			<p>
-				Les peintures, colles, mastics et consommables sont croisés avec les notices Revell, Gunze, AK ou Mr Hobby.
-				Les correspondances FS/RAL sont précisées quand disponibles.
-			</p>
-		</article>
-		<article>
-			<h3>Visuels fiables</h3>
-			<p>
-				Nous pointons vers des sources licenciées (Wikimedia, photothèques officielles, plans constructeur, photos spotters)
-				pour identifier détails, antennes, usure et marquages.
-			</p>
-		</article>
-		<article>
-			<h3>Conseils atelier</h3>
-			<p>
-				Lecture des retours de montages, corrections recommandées, séquences de peinture éprouvées :
-				tout est synthétisé pour éviter les pièges connus.
-			</p>
-		</article>
-	</section>
-
-	<section>
-		<div class="section-head">
-			<h2>Catalogue disponible</h2>
-			<p class="muted">D’autres références rejoignent régulièrement cette sélection, selon les montages en cours.</p>
-		</div>
-		<div class="model-grid">
-			{models.map((model) => (
-				<article class="model-card">
+			{featuredModel ? (
+				<aside class="flex flex-col justify-between rounded-[2rem] bg-primary px-7 py-8 text-primary-content">
 					<div>
-						<p class="eyebrow">{model.manufacturer || 'Toton Maquette'}</p>
-						<h2>{model.modelName}</h2>
-						{model.reference && <p class="muted">Référence {model.reference}</p>}
-						<p>{model.summary || 'Consulte la fiche pour découvrir le contenu complet.'}</p>
+						<p class="brand-pill text-primary-content/70">Fiche en avant</p>
+						<h2 class="mt-4 text-3xl leading-tight">{featuredModel.modelName}</h2>
+						{featuredModel.reference && (
+							<p class="mt-1 text-lg font-semibold">Référence {featuredModel.reference}</p>
+						)}
+						<p class="mt-4 text-primary-content/80">
+							{featuredModel.summary || `Consulte la fiche pour découvrir l’intégralité des ressources.`}
+						</p>
 					</div>
-					<a class="btn" href={`${base}models/${model.slug}/`}>Voir la fiche</a>
+					<a class="btn btn-outline mt-6 w-full border-primary-content text-primary-content" href={`${base}models/${featuredModel.slug}/`}>
+						Ouvrir la fiche
+					</a>
+				</aside>
+			) : null}
+		</section>
+
+		<section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+			{methodology.map((item) => (
+				<article class="rounded-2xl border border-base-300 bg-base-100 p-6 shadow-sm">
+					<p class="section-label text-primary/70">{item.title}</p>
+					<p class="mt-3 text-base-content/80">{item.copy}</p>
 				</article>
 			))}
-		</div>
-	</section>
+		</section>
 
-	<section class="workflow">
-		<div>
-			<h2>Publier une nouvelle fiche</h2>
-			<p>Nous planifions régulièrement de nouvelles références (Revell, Zvezda, résine artisanale).</p>
-			<ul>
-				<li>Repérage des sources (notices constructeur, walkarounds, retours de montage)</li>
-				<li>Saisie des 5 volets (historique, matériel, visuels, conseils, synthèse)</li>
-				<li>Vérification croisée des teintes, antennes, options</li>
-				<li>Relecture éditoriale avant mise en ligne</li>
-			</ul>
-		</div>
-		<div class="workflow-panel">
-			<h3>Accompagnement éditorial</h3>
-			<p>
-				Chaque fiche est relue pour assurer cohérence, orthographe et exactitude technique.
-				Nous suivons les retours de maquettistes pour enrichir les sections matériel ou conseils d’assemblage.
-			</p>
-			<p>
-				Le site est conçu pour être consulté sur un banc d’atelier, tablette ou smartphone,
-				pour rester accessible pendant les sessions de montage.
-			</p>
-		</div>
-	</section>
-</SiteChrome>
+		<section class="space-y-6">
+			<div class="flex flex-wrap items-end justify-between gap-4">
+				<div>
+					<p class="section-label">Catalogue disponible</p>
+					<h2 class="text-3xl leading-tight">Fiches prêtes à l’emploi</h2>
+					<p class="text-base-content/70">Les références s’ajoutent au fil des montages en cours.</p>
+				</div>
+				<a class="btn btn-outline" href="mailto:bonjour@toton-maquette.com">Proposer une maquette</a>
+			</div>
+			<div class="card-grid">
+				{models.map((model) => (
+					<article class="flex flex-col rounded-2xl border border-base-300 bg-base-100 p-6 shadow-sm">
+						<div class="space-y-2">
+							<p class="text-xs font-semibold uppercase tracking-[0.3em] text-base-content/60">
+								{model.manufacturer || 'Toton Maquette'}
+							</p>
+							<h3 class="text-2xl">{model.modelName}</h3>
+							{model.reference && <p class="text-sm text-base-content/60">Référence {model.reference}</p>}
+							<p class="text-base-content/80">{model.summary || 'Consulte la fiche pour découvrir le contenu complet.'}</p>
+						</div>
+						<div class="mt-6 flex items-center justify-between text-sm text-base-content/60">
+							<span>{model.docs.length} sections documentées</span>
+							<a class="btn btn-sm btn-primary" href={`${base}models/${model.slug}/`}>
+								Voir la fiche
+							</a>
+						</div>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+			<div class="rounded-[2rem] border border-base-300 bg-base-100 p-8 shadow-sm">
+				<p class="section-label">Mode opératoire</p>
+				<h2 class="mt-3 text-3xl">Comment nous montons une fiche</h2>
+				<ul class="mt-6 space-y-3 text-base-content/80">
+					<li>
+						<strong>1.</strong> Repérage des sources (constructeurs, walkarounds, retours concours, archives compagnies).
+					</li>
+					<li>
+						<strong>2.</strong> Saisie des cinq volets (historique, matériel, visuels, tips, synthèse atelier).
+					</li>
+					<li>
+						<strong>3.</strong> Vérification croisée des teintes, antennes, corrections et options.
+					</li>
+					<li>
+						<strong>4.</strong> Relecture éditoriale et publication, suivie des retours clubs/IPMS.
+					</li>
+				</ul>
+			</div>
+			<div class="rounded-[2rem] border border-primary/30 bg-gradient-to-br from-primary/10 via-base-100 to-base-100 p-8">
+				<p class="section-label">Accompagnement</p>
+				<h2 class="mt-3 text-3xl">Besoin d’un dossier spécifique ?</h2>
+				<p class="mt-4 text-base-content/80">
+					Nous priorisons les fiches selon les demandes de la communauté. Partage tes besoins (compagnie, version, échelle) et nous
+					répondrons avec un plan de documentation précis.
+				</p>
+				<a class="btn btn-primary mt-6" href="mailto:bonjour@toton-maquette.com">Demander une fiche</a>
+			</div>
+		</section>
+	</SiteChrome>
 </Layout>
