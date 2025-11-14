@@ -12,54 +12,55 @@ const base = import.meta.env.BASE_URL || '/';
 	<section class="hero">
 		<div>
 			<p class="eyebrow">Atelier Tonton Marquette</p>
-			<h1>Documentation professionnelle pour maquettes statiques</h1>
+			<h1>Documentation experte pour maquettes statiques</h1>
 			<p>
-				Chaque fiche synthétise historique du modèle, matériel approuvé, visuels de référence et protocoles
-				de finition. Les informations sont vérifiées sur sources constructeurs, retours IPMS et retours terrain.
+				Chaque fiche synthétise le contexte du modèle réel, l’inventaire du matériel indispensable,
+				les visuels de référence et les gestes atelier. Nous documentons chaque point à partir de notices constructeur,
+				retours IPMS ou clubs de maquettistes et archives de compagnies aériennes.
 			</p>
 			<div class="hero-cta">
 				<a class="btn" href={`${base}models/${models[0]?.slug ?? ''}/`}>Consulter une fiche</a>
-				<span>Catalogue en croissance continue</span>
+				<span>Catalogue mis à jour au fil des montages</span>
 			</div>
 		</div>
 		<div class="hero-panel">
-			<h2>Processus éditorial</h2>
+			<h2>Méthode éditoriale</h2>
 			<ol>
-				<li>Audit des sources officielles (constructeur, revues)</li>
-				<li>Compilation du matériel nécessaire et des références chromatiques</li>
-				<li>Conseils d’assemblage validés par des montages documentés</li>
-				<li>Rendu statique optimisé pour la publication web</li>
+				<li>Recherche historique : dossiers constructeur, archives d’unités, compagnies civiles.</li>
+				<li>Recensement des teintes et produits réellement disponibles en France/UE.</li>
+				<li>Analyse des montages publiés (IPMS, Britmodeller, réseaux de clubs).</li>
+				<li>Compilation des visuels et synthèse en checklist claire.</li>
 			</ol>
 		</div>
 	</section>
 
 	<section class="info-grid">
 		<article>
-			<h3>Historique Premium</h3>
+			<h3>Historique fiable</h3>
 			<p>
-				Chaque fiche replace la maquette dans le contexte du programme réel. Dates clés, évolutions techniques et adoption
-				par les opérateurs sont condensées pour guider le choix des livrées ou variantes.
+				Chaque fiche replace la maquette dans l’histoire du programme réel : dates clés, évolutions techniques, compagnies
+				utilisatrices, points particuliers de la version reproduite.
 			</p>
 		</article>
 		<article>
-			<h3>Matériel homologué</h3>
+			<h3>Matériel validé</h3>
 			<p>
-				Les références peintures, colles et consommables sont croisées avec les notices Revell, Gunze, AK, etc. Tu gagnes du temps
-				en travaillant avec une liste validée.
+				Les peintures, colles, mastics et consommables sont croisés avec les notices Revell, Gunze, AK ou Mr Hobby.
+				Les correspondances FS/RAL sont précisées quand disponibles.
 			</p>
 		</article>
 		<article>
 			<h3>Visuels fiables</h3>
 			<p>
-				Nous pointons vers des sources licenciées (Wikimedia, photothèques officielles, plans) pour garantir
-				la précision des détails (antennes, stencils, patines).
+				Nous pointons vers des sources licenciées (Wikimedia, photothèques officielles, plans constructeur, photos spotters)
+				pour identifier détails, antennes, usure et marquages.
 			</p>
 		</article>
 		<article>
-			<h3>Conseils d’atelier</h3>
+			<h3>Conseils atelier</h3>
 			<p>
-				Les retours d’expérience (IPMS, forums spécialisés) se traduisent en checklists actionnables : corrections à prévoir,
-				trous à percer, séquences de peinture éprouvées.
+				Lecture des retours de montages, corrections recommandées, séquences de peinture éprouvées :
+				tout est synthétisé pour éviter les pièges connus.
 			</p>
 		</article>
 	</section>
@@ -67,7 +68,7 @@ const base = import.meta.env.BASE_URL || '/';
 	<section>
 		<div class="section-head">
 			<h2>Catalogue disponible</h2>
-			<p class="muted">Chaque fiche est prête à être consultée sur ordinateur, tablette ou banc d’atelier.</p>
+			<p class="muted">D’autres références rejoignent régulièrement cette sélection, selon les montages en cours.</p>
 		</div>
 		<div class="model-grid">
 			{models.map((model) => (
@@ -87,23 +88,23 @@ const base = import.meta.env.BASE_URL || '/';
 	<section class="workflow">
 		<div>
 			<h2>Étendre le catalogue</h2>
-			<p>
-				Envie d’ajouter une nouvelle référence Revell ou un kit résine rare ?
-			</p>
+			<p>Envie de documenter une nouvelle référence (Revell, Zvezda, résine artisanale) ?</p>
 			<ul>
 				<li>Créer un dossier dans <code>/models</code></li>
-				<li>Renseigner les 5 fichiers Markdown (historique, matériel, visuels, tips, index)</li>
-				<li>Exécuter <code>npm run build</code> pour publier</li>
+				<li>Renseigner les 5 fichiers Markdown (historique, matériel, visuels, tips, synthèse)</li>
+				<li>Valider les sources (notices, walkarounds, retours de montage)</li>
+				<li>Soumettre la fiche pour relecture et publication</li>
 			</ul>
 		</div>
 		<div class="workflow-panel">
-			<h3>Prêt pour la production</h3>
+			<h3>Service éditorial</h3>
 			<p>
-				L’infrastructure Astro + GitHub Pages permet un déploiement rapide et reproductible.
-				Chaque build embarque les dernières fiches et styles.
+				Chaque fiche est relue pour garantir cohérence, orthographe et exactitude technique.
+				Nous suivons les retours des lecteurs pour enrichir les sections matériel ou tips.
 			</p>
 			<p>
-				Le site est optimisé pour rester lisible sur tablette d’atelier, smartphone ou desktop.
+				Le site est conçu pour être consulté sur un banc d’atelier, tablette ou smartphone,
+				pour rester accessible pendant les sessions de montage.
 			</p>
 		</div>
 	</section>
