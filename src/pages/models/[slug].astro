@@ -1,0 +1,73 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SiteChrome from '../../components/SiteChrome.astro';
+import { getAllModels, slugifyText } from '../../lib/models';
+import type { ModelEntry } from '../../lib/models';
+
+export async function getStaticPaths() {
+	const models = getAllModels();
+	return models.map((model) => ({
+		params: { slug: model.slug },
+		props: { model },
+	}));
+}
+
+const { model } = Astro.props as { model: ModelEntry };
+const pageTitle = `${model.modelName} – ${model.reference || 'Fiche'}`;
+const base = import.meta.env.BASE_URL || '/';
+---
+
+<Layout title={pageTitle} description={model.summary}>
+	<SiteChrome>
+		<div class="breadcrumbs">
+			<a href={base}>Accueil</a>
+			<span class="crumb-sep">/</span>
+			<span>{model.modelName}</span>
+		</div>
+
+		<section class="model-hero">
+			<div>
+				<p class="eyebrow">{model.manufacturer || 'Maquette'}</p>
+				<h1>{model.modelName}</h1>
+				{model.reference && (
+					<p class="muted">
+						Référence <strong>{model.reference}</strong>
+					</p>
+				)}
+			</div>
+			<div>
+				<ul class="meta-list">
+					<li>
+						<span>Slug</span>
+						{model.slug}
+					</li>
+					<li>
+						<span>Dossiers</span>
+						{model.docs.length}
+					</li>
+				</ul>
+			</div>
+		</section>
+
+		<aside class="local-nav">
+			<h2>Sections</h2>
+			<ul>
+				{model.docs.map((doc) => (
+					<li>
+						<a href={`#${slugifyText(doc.title)}`}>{doc.title}</a>
+					</li>
+				))}
+			</ul>
+		</aside>
+
+		{model.docs.map((doc) => (
+			<section id={slugifyText(doc.title)}>
+				<div class="section-head">
+					<h2>{doc.title}</h2>
+					<a href={`#${slugifyText(doc.title)}`} aria-label={`Lien vers ${doc.title}`}>#</a>
+				</div>
+				<div set:html={doc.html} />
+			</section>
+		))}
+	</SiteChrome>
+</Layout>

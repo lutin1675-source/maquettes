@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteChrome from '../components/SiteChrome.astro';
+import { getAllModels } from '../lib/models';
+
+const models = getAllModels();
+const base = import.meta.env.BASE_URL || '/';
+---
+
+<Layout title="Perso Maquettes" description="Catalogue documenté de maquettes statiques.">
+	<SiteChrome>
+		<section class="hero">
+			<div>
+				<p class="eyebrow">Atelier documentaire</p>
+				<h1>Maquettes statiques documentées</h1>
+				<p>
+					Chaque fiche rassemble contexte historique, matériel recommandé, visuels de référence et conseils
+					de finition, avec sources vérifiées.
+				</p>
+			</div>
+			<div class="hero-panel">
+				<h2>Déploiement facile</h2>
+				<ul>
+					<li>Ajouter une maquette dans <code>/models</code></li>
+					<li>Exécuter <code>npm run build</code></li>
+					<li>Pousser sur GitHub Pages</li>
+				</ul>
+			</div>
+		</section>
+
+		<section>
+			<h2>Catalogue</h2>
+			<div class="model-grid">
+				{models.map((model) => (
+					<article class="model-card">
+						<div>
+							<p class="eyebrow">{model.manufacturer || 'Maquette'}</p>
+							<h2>{model.modelName}</h2>
+							{model.reference && <p class="muted">Référence {model.reference}</p>}
+							<p>{model.summary || 'Consulte la fiche pour découvrir le contenu complet.'}</p>
+						</div>
+						<a class="btn" href={`${base}models/${model.slug}/`}>Voir la fiche</a>
+					</article>
+				))}
+			</div>
+		</section>
+	</SiteChrome>
+</Layout>
