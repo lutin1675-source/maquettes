@@ -1,15 +1,18 @@
 ---
 const { className: customClass = '' } = Astro.props;
 const base = import.meta.env.BASE_URL || '/';
+const year = new Date().getFullYear();
 ---
 
 <header class="site-header">
 	<div class="container">
-		<a class="brand" href={base}>Tonton Marquette</a>
-		<nav>
-			<a href={base}>Accueil</a>
-			<a href="https://github.com/lutin1675-source/maquettes" rel="noreferrer">GitHub</a>
-		</nav>
+		<a class="brand logo" href={base}>
+			<span class="icon">✈︎</span>
+			<span class="logo-text">
+				<span class="logo-title">Tonton Marquette</span>
+				<span class="slogan">Notre passion</span>
+			</span>
+		</a>
 	</div>
 </header>
 
@@ -18,7 +21,18 @@ const base = import.meta.env.BASE_URL || '/';
 </main>
 
 <footer class="site-footer">
-	<div class="container">
-		<p>Documentation générée avec Astro · prête pour GitHub Pages</p>
+	<div class="container footer-grid">
+		<div>
+			<p>© {year} Tonton Marquette. Tous droits réservés.</p>
+		</div>
+		<div>
+			<a href={`${base}cgu/`}>Conditions Générales d'Utilisation</a>
+		</div>
+		<div class="footer-contact">
+			<p>
+				Contact : <a href="mailto:bonjour@tonton-marquette.com">bonjour@tonton-marquette.com</a><br />
+				N'hésitez pas à nous partager vos idées ou besoins documentaires, nous répondons rapidement.
+			</p>
+		</div>
 	</div>
 </footer>

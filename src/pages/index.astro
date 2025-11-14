@@ -8,41 +8,104 @@ const base = import.meta.env.BASE_URL || '/';
 ---
 
 <Layout title="Tonton Marquette" description="Catalogue documenté de maquettes statiques.">
-	<SiteChrome>
-		<section class="hero">
-			<div>
-				<p class="eyebrow">Atelier documentaire</p>
-				<h1>Maquettes statiques documentées</h1>
-				<p>
-					Chaque fiche rassemble contexte historique, matériel recommandé, visuels de référence et conseils
-					de finition, avec sources vérifiées.
-				</p>
+<SiteChrome>
+	<section class="hero">
+		<div>
+			<p class="eyebrow">Atelier Tonton Marquette</p>
+			<h1>Documentation professionnelle pour maquettes statiques</h1>
+			<p>
+				Chaque fiche synthétise historique du modèle, matériel approuvé, visuels de référence et protocoles
+				de finition. Les informations sont vérifiées sur sources constructeurs, retours IPMS et retours terrain.
+			</p>
+			<div class="hero-cta">
+				<a class="btn" href={`${base}models/${models[0]?.slug ?? ''}/`}>Consulter une fiche</a>
+				<span>Catalogue en croissance continue</span>
 			</div>
-			<div class="hero-panel">
-				<h2>Déploiement facile</h2>
-				<ul>
-					<li>Ajouter une maquette dans <code>/models</code></li>
-					<li>Exécuter <code>npm run build</code></li>
-					<li>Pousser sur GitHub Pages</li>
-				</ul>
-			</div>
-		</section>
+		</div>
+		<div class="hero-panel">
+			<h2>Processus éditorial</h2>
+			<ol>
+				<li>Audit des sources officielles (constructeur, revues)</li>
+				<li>Compilation du matériel nécessaire et des références chromatiques</li>
+				<li>Conseils d’assemblage validés par des montages documentés</li>
+				<li>Rendu statique optimisé pour la publication web</li>
+			</ol>
+		</div>
+	</section>
 
-		<section>
-			<h2>Catalogue</h2>
-			<div class="model-grid">
-				{models.map((model) => (
-					<article class="model-card">
-						<div>
-							<p class="eyebrow">{model.manufacturer || 'Maquette'}</p>
-							<h2>{model.modelName}</h2>
-							{model.reference && <p class="muted">Référence {model.reference}</p>}
-							<p>{model.summary || 'Consulte la fiche pour découvrir le contenu complet.'}</p>
-						</div>
-						<a class="btn" href={`${base}models/${model.slug}/`}>Voir la fiche</a>
-					</article>
-				))}
-			</div>
-		</section>
-	</SiteChrome>
+	<section class="info-grid">
+		<article>
+			<h3>Historique Premium</h3>
+			<p>
+				Chaque fiche replace la maquette dans le contexte du programme réel. Dates clés, évolutions techniques et adoption
+				par les opérateurs sont condensées pour guider le choix des livrées ou variantes.
+			</p>
+		</article>
+		<article>
+			<h3>Matériel homologué</h3>
+			<p>
+				Les références peintures, colles et consommables sont croisées avec les notices Revell, Gunze, AK, etc. Tu gagnes du temps
+				en travaillant avec une liste validée.
+			</p>
+		</article>
+		<article>
+			<h3>Visuels fiables</h3>
+			<p>
+				Nous pointons vers des sources licenciées (Wikimedia, photothèques officielles, plans) pour garantir
+				la précision des détails (antennes, stencils, patines).
+			</p>
+		</article>
+		<article>
+			<h3>Conseils d’atelier</h3>
+			<p>
+				Les retours d’expérience (IPMS, forums spécialisés) se traduisent en checklists actionnables : corrections à prévoir,
+				trous à percer, séquences de peinture éprouvées.
+			</p>
+		</article>
+	</section>
+
+	<section>
+		<div class="section-head">
+			<h2>Catalogue disponible</h2>
+			<p class="muted">Chaque fiche est prête à être consultée sur ordinateur, tablette ou banc d’atelier.</p>
+		</div>
+		<div class="model-grid">
+			{models.map((model) => (
+				<article class="model-card">
+					<div>
+						<p class="eyebrow">{model.manufacturer || 'Maquette'}</p>
+						<h2>{model.modelName}</h2>
+						{model.reference && <p class="muted">Référence {model.reference}</p>}
+						<p>{model.summary || 'Consulte la fiche pour découvrir le contenu complet.'}</p>
+					</div>
+					<a class="btn" href={`${base}models/${model.slug}/`}>Voir la fiche</a>
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class="workflow">
+		<div>
+			<h2>Étendre le catalogue</h2>
+			<p>
+				Envie d’ajouter une nouvelle référence Revell ou un kit résine rare ?
+			</p>
+			<ul>
+				<li>Créer un dossier dans <code>/models</code></li>
+				<li>Renseigner les 5 fichiers Markdown (historique, matériel, visuels, tips, index)</li>
+				<li>Exécuter <code>npm run build</code> pour publier</li>
+			</ul>
+		</div>
+		<div class="workflow-panel">
+			<h3>Prêt pour la production</h3>
+			<p>
+				L’infrastructure Astro + GitHub Pages permet un déploiement rapide et reproductible.
+				Chaque build embarque les dernières fiches et styles.
+			</p>
+			<p>
+				Le site est optimisé pour rester lisible sur tablette d’atelier, smartphone ou desktop.
+			</p>
+		</div>
+	</section>
+</SiteChrome>
 </Layout>

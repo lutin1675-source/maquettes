@@ -60,6 +60,44 @@ a:hover {
 	color: var(--text);
 }
 
+.logo {
+	font-family: 'Space Grotesk', 'Sora', 'Inter', sans-serif;
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+	font-weight: 600;
+	color: var(--text);
+}
+
+.logo,
+.logo:hover,
+.logo:focus {
+	text-decoration: none;
+}
+
+.logo .icon {
+	font-size: 2.6rem;
+	color: var(--accent);
+}
+
+.logo-text {
+	display: flex;
+	flex-direction: column;
+	line-height: 1.1;
+}
+
+.logo-title {
+	font-size: 1.25rem;
+	text-transform: uppercase;
+}
+
+.slogan {
+	font-size: 0.85rem;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--muted);
+}
+
 .site-header nav a + a {
 	margin-left: 1rem;
 }
@@ -86,12 +124,39 @@ a:hover {
 	margin: 0.3rem 0 0;
 }
 
+.hero-panel ol {
+	padding-left: 1.2rem;
+	margin: 0.5rem 0 0;
+}
+
+.hero-cta {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin-top: 1.5rem;
+	font-weight: 600;
+	color: rgb(255 255 255 / 0.85);
+}
+
 .eyebrow {
 	font-size: 0.85rem;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
 	color: rgb(255 255 255 / 0.8);
 	margin-bottom: 0.4rem;
+}
+
+.info-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 1.5rem;
+}
+
+.info-grid article {
+	background: var(--card);
+	border-radius: 1rem;
+	padding: 1.5rem;
+	border: 1px solid var(--border);
 }
 
 .model-grid {
@@ -239,8 +304,49 @@ code {
 }
 
 .site-footer .container {
-	text-align: center;
 	padding: 1.5rem;
+}
+
+.footer-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 1rem;
+	align-items: flex-start;
+}
+
+.footer-grid a {
+	color: #c7d2fe;
+}
+
+.workflow {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	background: #fff;
+	border-radius: 1.5rem;
+	border: 1px solid var(--border);
+	padding: 2rem;
+	gap: 2rem;
+	margin-top: 2rem;
+}
+
+.workflow-panel {
+	background: var(--bg);
+	border-radius: 1rem;
+	padding: 1.5rem;
+	border: 1px solid var(--border);
+}
+
+.static-page .legal {
+	background: #fff;
+	border-radius: 1rem;
+	padding: 2rem;
+	border: 1px solid var(--border);
+	max-width: 800px;
+	margin: 0 auto 2rem;
+}
+
+.static-page .legal h1 {
+	margin-top: 0;
 }
 
 @media (max-width: 700px) {
@@ -256,4 +362,12 @@ code {
 	.model-hero {
 		padding: 1.5rem;
 	}
+}
+.footer-contact a {
+	color: #fff;
+	font-weight: 600;
+}
+
+.footer-contact p {
+	margin: 0;
 }
