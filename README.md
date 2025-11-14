@@ -1,4 +1,4 @@
-# Tonton Marquette (Astro)
+# Maquette (Astro)
 
 Site statique généré avec [Astro](https://astro.build) à partir des dossiers Markdown situés dans `models/`. Chaque maquette dispose d’une page dédiée regroupant historique, matériel, visuels et conseils.
 
