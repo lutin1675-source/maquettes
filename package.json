@@ -1,0 +1,23 @@
+{
+  "name": "perso-maquettes",
+  "version": "1.0.0",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lutin1675-source/maquettes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lutin1675-source/maquettes/issues"
+  },
+  "homepage": "https://github.com/lutin1675-source/maquettes#readme",
+  "description": "",
+  "dependencies": {
+    "markdown-it": "^14.1.0"
+  }
+}
