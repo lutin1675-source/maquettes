@@ -1,45 +1,82 @@
-# Perso Maquettes
+# Perso Maquettes (Astro)
 
-Site statique généré à partir des dossiers `models/*`. Il rassemble l’historique, le matériel, les visuels et les conseils propres à chaque maquette.
+Site statique généré avec [Astro](https://astro.build) à partir des dossiers Markdown situés dans `models/`. Chaque maquette dispose d’une page dédiée regroupant historique, matériel, visuels et conseils.
 
-## Prérequis
+## Structure du dépôt
 
-- Node.js 18+ (pour profiter des API de fichiers modernes)
-- `npm` (fourni avec Node)
-
-## Générer le site
-
-```bash
-npm install
-npm run build
+```
+models/
+└── [Nom complet]-[Marque]-[Référence]/
+    ├── index.md        (synthèse)
+    ├── historique.md
+    ├── materiel.md
+    ├── visuels.md
+    └── tips.md
+src/
+├── lib/models.ts       (lecture + parsing Markdown)
+├── pages/index.astro   (catalogue)
+└── pages/models/[slug].astro
 ```
 
-Le dossier `dist/` contient les fichiers prêts à être publiés (HTML + CSS). Pour prévisualiser localement :
+Les fichiers Markdown restent au format libre (pas de front matter imposé). Le parser convertit automatiquement chaque dossier en fiche accessible sous `/models/<slug>/`.
+
+## Développement
 
 ```bash
-npx serve dist
+npm install          # installe Astro et markdown-it
+npm run dev          # serveur de développement http://localhost:4321
+npm run build        # build statique dans dist/
+npm run preview      # vérification locale de dist/
 ```
 
 ## Ajouter une maquette
 
-1. Créer un dossier dans `models/` selon le format `[nom complet]-[fabricant]-[référence]`.
-2. Ajouter les fichiers Markdown requis : `index.md`, `historique.md`, `materiel.md`, `visuels.md`, `tips.md`.
-3. Relancer `npm run build` pour rafraîchir le site.
+1. Créer un dossier `models/[Nom]-[Marque]-[Référence]/`.
+2. Ajouter les 5 fichiers Markdown mentionnés ci-dessus.
+3. Lancer `npm run dev` (ou `npm run build`) : Astro détecte automatiquement la nouvelle fiche.
 
-Les fichiers Markdown sont rendus tels quels ; privilégier des sections claires et vérifier les sources.
+## Publication sur GitHub Pages
 
-## Publier sur GitHub Pages
+Tu peux réutiliser le workflow GitHub Actions classique :
 
-Option rapide (branche dédiée) :
+```yaml
+name: Build and Deploy
 
-1. Générer le site `npm run build`.
-2. Copier `dist/` dans une branche `gh-pages` (ex. via `git subtree push --prefix dist origin gh-pages`).
-3. Activer GitHub Pages sur la branche `gh-pages`.
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
 
-Option « Pages depuis le dépôt principal » :
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
-1. Activer GitHub Pages → Source `GitHub Actions`.
-2. Utiliser le workflow par défaut « Static HTML » et ajouter une étape `npm run build`.
-3. Déployer le contenu du dossier `dist`.
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: npm install
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
 
-Pensez à reconstruire le site à chaque ajout de maquette et à republier `dist/`.
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+Active `GitHub Pages > Build and deployment > GitHub Actions`, pousse sur `main` et la branche sera publiée automatiquement (le site reste disponible sous `https://<user>.github.io/maquettes/`).
+
+> ℹ️ Pense à adapter `astro.config.mjs` (propriété `site`/`base`) si tu déploies sous un autre sous-domaine ou un nom de dépôt différent.
