@@ -28,6 +28,8 @@
     --tm-lumen: #f4ff8f;
     --tm-text: #eef2ff;
     --tm-muted: #98a6d7;
+    --tm-radius: 1rem;
+    --tm-shadow: 0 12px 30px rgba(4, 8, 16, 0.35);
   }
 
   html {
@@ -127,13 +129,31 @@
 
   .tm-panel {
     background: linear-gradient(145deg, rgba(16, 27, 51, 0.95), rgba(5, 10, 20, 0.95));
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 25px 45px rgba(4, 8, 16, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--tm-radius);
+    box-shadow: var(--tm-shadow);
+  }
+
+  .tm-hero-panel {
+    position: relative;
+    background: linear-gradient(150deg, rgba(12, 22, 43, 0.95), rgba(5, 10, 22, 0.98));
+    box-shadow: 0 20px 45px rgba(6, 10, 24, 0.45);
+  }
+
+  .tm-hero-panel::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(120deg, rgba(43, 217, 197, 0.4), rgba(142, 125, 255, 0.4), rgba(255, 143, 101, 0.35));
+    filter: blur(18px);
+    opacity: 0.5;
+    z-index: -1;
   }
 
   .tm-gradient-border {
     position: relative;
-    border-radius: 1.5rem;
+    border-radius: calc(var(--tm-radius) + 0.25rem);
   }
 
   .tm-gradient-border::before {
@@ -162,7 +182,7 @@
   .tm-gallery figure {
     position: relative;
     overflow: hidden;
-    border-radius: 1.25rem;
+    border-radius: calc(var(--tm-radius) + 0.25rem);
   }
 
   .tm-gallery img {

@@ -26,7 +26,7 @@ const base = import.meta.env.BASE_URL || '/';
 		</nav>
 
 		<section class="grid gap-6 md:grid-cols-2">
-			<div class="tm-panel rounded-[2rem] p-8">
+			<div class="tm-panel rounded-xl p-8">
 				<p class="brand-pill text-[var(--tm-lagoon)]/80">{model.manufacturer || 'Toton Maquette'}</p>
 				<h1 class="mt-4 text-4xl leading-tight">{model.modelName}</h1>
 				{model.reference && <p class="text-[var(--tm-muted)]">Référence {model.reference}</p>}
@@ -35,7 +35,7 @@ const base = import.meta.env.BASE_URL || '/';
 						'Retrouve dans cette fiche tout l’historique pertinent, les références de peinture fiables et les corrections atelier recommandées.'}
 				</p>
 			</div>
-			<div class="tm-panel rounded-[2rem] p-6">
+			<div class="tm-panel rounded-xl p-6">
 				<ul class="space-y-3 text-sm">
 					<li class="flex items-center justify-between border-b border-white/10 pb-3">
 						<span class="text-[var(--tm-muted)]">Slug</span>
@@ -59,7 +59,7 @@ const base = import.meta.env.BASE_URL || '/';
 			</div>
 		</section>
 
-		<aside class="tm-panel rounded-2xl p-6">
+		<aside class="tm-panel rounded-xl p-6">
 			<p class="section-label text-[var(--tm-lagoon)]">Sections</p>
 			<ul class="mt-4 space-y-2">
 				{model.docs.map((doc) => (
@@ -73,7 +73,7 @@ const base = import.meta.env.BASE_URL || '/';
 		</aside>
 
 		{model.docs.map((doc) => (
-			<section id={slugifyText(doc.title)} class="tm-panel scroll-mt-32 rounded-[2rem] p-8">
+			<section id={slugifyText(doc.title)} class="tm-panel scroll-mt-32 rounded-xl p-8">
 				<div class="mb-6 flex items-center justify-between gap-4">
 					<h2 class="text-3xl">{doc.title}</h2>
 					<a
