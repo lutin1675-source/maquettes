@@ -1,12 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SiteChrome from '../components/SiteChrome.astro';
-import { getAllModels } from '../lib/models';
 
-const models = getAllModels();
 const base = import.meta.env.BASE_URL || '/';
-const featuredModel = models[0];
 const heroVisual = 'https://images.unsplash.com/photo-1476610182048-b716b8518aae?auto=format&fit=crop&w=1200&q=80';
+const heroAside = {
+	title: 'Programme atelier',
+	description:
+		'Nous documentons chaque fiche à partir de montages réels et de sources constructeur. Dis-moi ce dont tu as besoin (kit, technique, outillage) et je priorise la rédaction.',
+	points: ['Brief sur mesure', 'Validation des sources', 'Suivi des retours clubs'],
+	cta: { label: 'Écrire', href: 'mailto:bonjour@toton-maquette.com' },
+};
 const atelierHighlights = [
 	{
 		title: 'Journal de progression',
@@ -98,32 +102,29 @@ const spotlight = {
 				</div>
 			</article>
 
-			{featuredModel ? (
-				<aside class="tm-panel flex flex-col justify-between rounded-xl p-7">
-					<div>
-						<p class="brand-pill text-[var(--tm-lumen)]/70">Fiche models en avant</p>
-						<h2 class="mt-4 text-3xl leading-tight">{featuredModel.modelName}</h2>
-						{featuredModel.reference && (
-							<p class="mt-2 text-sm uppercase tracking-[0.35em] text-[var(--tm-muted)]">Référence {featuredModel.reference}</p>
-						)}
-						<p class="mt-4 text-[var(--tm-muted)]">
-							{featuredModel.summary || `Consulte la fiche pour découvrir l’intégralité des ressources.`}
-						</p>
-					</div>
-					<div>
-						<figure class="mt-6 overflow-hidden rounded-lg border border-white/10">
-							<img src={heroVisual} alt="Visuel de référence avion civil" loading="lazy" />
-							<figcaption class="bg-black/60 px-4 py-2 text-xs uppercase tracking-[0.4em]">Visuel repère 2026</figcaption>
-						</figure>
-						<a
-							class="mt-6 inline-flex w-full items-center justify-center rounded-full border border-white/40 px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em]"
-							href={`${base}models/${featuredModel.slug}/`}
-						>
-							Ouvrir la fiche
-						</a>
-					</div>
-				</aside>
-			) : null}
+			<aside class="tm-panel flex flex-col justify-between rounded-xl p-7">
+				<div>
+					<p class="brand-pill text-[var(--tm-lumen)]/70">{heroAside.title}</p>
+					<p class="mt-4 text-[var(--tm-muted)]">{heroAside.description}</p>
+					<ul class="mt-4 space-y-2 text-sm text-[var(--tm-muted)]">
+						{heroAside.points.map((point) => (
+							<li>• {point}</li>
+						))}
+					</ul>
+				</div>
+				<div>
+					<figure class="mt-6 overflow-hidden rounded-lg border border-white/10">
+						<img src={heroVisual} alt="Visuel moodboard atelier" loading="lazy" />
+						<figcaption class="bg-black/60 px-4 py-2 text-xs uppercase tracking-[0.4em]">Moodboard atelier</figcaption>
+					</figure>
+					<a
+						class="mt-6 inline-flex w-full items-center justify-center rounded-full border border-white/40 px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em]"
+						href={heroAside.cta.href}
+					>
+						{heroAside.cta.label}
+					</a>
+				</div>
+			</aside>
 		</section>
 
 		<section class="space-y-6">
@@ -212,33 +213,5 @@ const spotlight = {
 			</div>
 		</section>
 
-		<section class="space-y-6">
-			<div class="flex flex-wrap items-end justify-between gap-4">
-				<div>
-					<p class="section-label">Catalogue models</p>
-					<h2 class="text-3xl leading-tight">Fiches prêtes à l’emploi</h2>
-					<p class="text-[var(--tm-muted)]">Chaque dossier regroupe historique, matériel, visuels et tips spécifiques.</p>
-				</div>
-				<a class="inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}models/`}>
-					Voir toutes les fiches
-				</a>
-			</div>
-			<div class="card-grid">
-				{models.map((model) => (
-					<article class="tm-panel flex flex-col rounded-xl p-6">
-						<div class="space-y-2">
-							<p class="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--tm-muted)]">{model.manufacturer || 'Toton Maquette'}</p>
-							<h3 class="text-2xl">{model.modelName}</h3>
-							{model.reference && <p class="text-sm text-[var(--tm-muted)]">Référence {model.reference}</p>}
-							<p class="text-[var(--tm-muted)]">{model.summary || 'Consulte la fiche pour découvrir le contenu complet.'}</p>
-						</div>
-						<a class="mt-6 inline-flex items-center justify-between rounded-full border border-white/10 px-4 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}models/${model.slug}/`}>
-							<span>{model.docs.length} sections documentées</span>
-							<span class="text-[var(--tm-lagoon)]">→</span>
-						</a>
-					</article>
-				))}
-			</div>
-		</section>
 	</SiteChrome>
 </Layout>

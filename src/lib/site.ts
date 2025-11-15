@@ -1,6 +1,6 @@
 export const SITE = {
 	title: 'Toton Maquette',
-	description: 'Hub pédagogique : journal de progression, pas-à-pas, banc d’essai et fiches modèles sourcées.',
+	description: 'Hub pédagogique : journal de progression, pas-à-pas et banc d’essai pour maquettistes débutants exigeants.',
 	tagline: 'Journal & banc d’essai pour maquettistes exigeants',
 	email: 'bonjour@toton-maquette.com',
 	github: 'https://github.com/gpouleri/perso-maquettes',
@@ -10,8 +10,8 @@ export const SITE = {
 export const NAV_LINKS = [
 	{ href: 'atelier/', label: 'L’Atelier' },
 	{ href: 'atelier/journal-de-progression/', label: 'Journal' },
+	{ href: 'atelier/fiches/', label: 'Fiches' },
 	{ href: 'banc-dessai/', label: 'Le Banc d’essai' },
-	{ href: 'models/', label: 'Catalogue' },
 	{ href: 'a-propos/', label: 'À propos' },
 	{ href: 'contact/', label: 'Contact' },
 ];
@@ -25,6 +25,7 @@ export const FOOTER_LINKS = [
 			{ href: 'atelier/techniques-pas-a-pas/', label: 'Techniques & Pas-à-pas' },
 			{ href: 'atelier/chroniques/', label: 'Chroniques' },
 			{ href: 'atelier/histoires-contexte/', label: 'Histoires & Contexte' },
+			{ href: 'atelier/fiches/', label: 'Fiches atelier' },
 		],
 	},
 	{
@@ -39,7 +40,6 @@ export const FOOTER_LINKS = [
 	{
 		title: 'Infos',
 		items: [
-			{ href: 'models/', label: 'Models (catalogue)' },
 			{ href: 'a-propos/', label: 'À propos' },
 			{ href: 'contact/', label: 'Contact' },
 			{ href: 'cgu/', label: 'Conditions d’utilisation' },
