@@ -6,8 +6,9 @@ scale: "1/144"
 summary: "Dossier complet pour monter l’édition Revell 03791 du BAe 146‑200 / Avro RJ85 : historique, matériel, visuels et astuces d’assemblage."
 intro: "Ce dossier rassemble toutes les informations nécessaires pour monter l’édition Revell 1/144 (réf. 03791) du BAe 146‑200 / Avro RJ85, depuis le contexte historique de l’avion jusqu’aux conseils de finition pour maquettistes."
 coverImage:
-  src: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1000&q=80"
-  alt: "Avro RJ85 en livrée régionale sur le tarmac"
+  src: "/images/atelier/bae-146/cover.jpg"
+  alt: "Boîte Revell BAe 146-200 AirUK sur l’établi"
+  credit: "Photo Toton Maquette"
 boxImage:
   src: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=900&q=80"
   alt: "Boîte Revell BAe 146 posée sur une plaque de découpe"
