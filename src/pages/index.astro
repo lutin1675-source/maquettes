@@ -6,46 +6,74 @@ import { getAllModels } from '../lib/models';
 const models = getAllModels();
 const base = import.meta.env.BASE_URL || '/';
 const featuredModel = models[0];
-const methodology = [
-	{
-		title: 'Historique vérifié',
-		copy:
-			'Nous recoupons archives constructeur, rapports d’exploitants et dossiers IPMS pour valider les dates, sous-versions et livrées.',
-	},
-	{
-		title: 'Sourcing matériel',
-		copy:
-			'Peintures, apprêts et consommables sont listés avec références FS/RAL et équivalences commercialisées en France/UE.',
-	},
-	{
-		title: 'Visuels de référence',
-		copy:
-			'Walkarounds officiels, photos spotters sous licence et plans permettent de placer chaque antenne, correction ou patine.',
-	},
-	{
-		title: 'Conseils atelier',
-		copy:
-			'Les retours de montage (clubs, concours, forums) sont synthétisés en checklists pour anticiper ajustements et séquences de peinture.',
-	},
-];
 const heroVisual = 'https://images.unsplash.com/photo-1476610182048-b716b8518aae?auto=format&fit=crop&w=1200&q=80';
-const referenceShots = [
+const atelierHighlights = [
 	{
-		title: 'Boeing 737 NG',
-		subtitle: 'Walkaround Istanbul',
-		image: 'https://images.unsplash.com/photo-1467951591042-f388365db261?auto=format&fit=crop&w=1200&q=80',
+		title: 'Journal de progression',
+		description:
+			'Entrées datées pour raconter chaque phase (choix du kit, montage, peinture, finitions) avec photos avant/après et leçons retenues.',
+		link: 'atelier/journal-de-progression/',
+		meta: 'Narration structurée',
 	},
 	{
-		title: 'Airbus A320neo',
-		subtitle: 'Line check Europe',
-		image: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80',
+		title: 'Techniques & Pas-à-pas',
+		description:
+			'Guides pédagogiques prêts à imprimer : matériel requis, étapes imagées, astuces et erreurs courantes sur une technique donnée.',
+		link: 'atelier/techniques-pas-a-pas/',
+		meta: 'Tutoriels détaillés',
 	},
 	{
-		title: 'Atelier résine',
-		subtitle: 'Corrections fuselage',
-		image: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80',
+		title: 'Chroniques',
+		description:
+			'Textes courts sur les frustrations, victoires et coulisses de l’atelier, toujours reliés à un apprentissage concret.',
+		link: 'atelier/chroniques/',
+		meta: 'Regards personnels',
+	},
+	{
+		title: 'Histoires & Contexte',
+		description:
+			'Dossiers historiques pour comprendre l’origine d’un modèle, ses variantes et les détails visibles à reproduire.',
+		link: 'atelier/histoires-contexte/',
+		meta: 'Culture maquette',
 	},
 ];
+const latestTests = [
+	{
+		title: 'Revell Boeing 737-800 1/144',
+		type: 'Test de kit',
+		summary: 'Analyse des grappes, ajustements karman/voilure et difficulté moyenne pour un premier liner.',
+		link: 'banc-dessai/tests-kits/',
+		tags: ['Moulage propre', 'Note : moyen', 'Recommandé intermédiaire'],
+	},
+	{
+		title: 'Tamiya Extra Thin vs colle bi-composant',
+		type: 'Comparatif colles',
+		summary: 'Temps de prise, résistance à la ponceuse et budget pour montage régulier.',
+		link: 'banc-dessai/comparatifs/',
+		tags: ['Collage précis', 'Profil débutant', 'Tableau synthétique'],
+	},
+	{
+		title: 'Aérographe double action entrée de gamme',
+		type: 'Test outil',
+		summary: 'Prise en main, entretien, compatibilité acrylique vs enamel et qualité du jet.',
+		link: 'banc-dessai/tests-outils-materiel/',
+		tags: ['Rendement', 'Comparé à H&S Ultra', 'Note : facile'],
+	},
+];
+const progressTimeline = [
+	{ phase: 'Phase 01 — Choix du kit', detail: 'Motivations, contraintes et objectifs consignés dans le journal.' },
+	{ phase: 'Phase 02 — Montage', detail: 'Liste des ajustements nécessaires et solutions testées.' },
+	{ phase: 'Phase 03 — Peinture', detail: 'Séquences couleur, masquage et références FS/RAL vérifiées.' },
+	{ phase: 'Phase 04 — Finitions', detail: 'Patine, vernis, présentation finale et retour d’expérience.' },
+];
+const spotlight = {
+	title: 'Pas-à-pas : Blanc gloss sans traces',
+	copy:
+		'Processus en 6 étapes pour réussir un blanc brillant sans peau d’orange : apprêt gris, pré-ombrage léger, couches fines à l’aéro puis polissage.',
+	link: 'atelier/techniques-pas-a-pas/',
+	action: 'Lire le pas-à-pas',
+	stats: ['Niveau : intermédiaire', 'Temps : 2h30 hors séchage', 'Matériel : apprêt gris + acrylique GNZ'],
+};
 ---
 
 <Layout title="Toton Maquette" description="Catalogue documenté de maquettes statiques.">
@@ -54,27 +82,26 @@ const referenceShots = [
 			<article class="tm-panel tm-hero-panel rounded-xl p-8">
 				<p class="section-label text-[var(--tm-lagoon)]">Observatoire Toton</p>
 				<h1 class="mt-4 text-4xl leading-tight lg:text-5xl">
-					Briefings techniques prêts à l’emploi pour maquettistes exigeants
+					Hub L’Atelier + Banc d’essai pour maquettistes exigeants
 				</h1>
 				<p class="mt-6 text-base text-[var(--tm-muted)]">
-					Chaque fiche compile historique, inventaire matériel, visuels de référence et gestes atelier. Les sources sont vérifiées auprès des constructeurs,
-					des centres IPMS et des réseaux de clubs avant publication pour garantir des montages rigoureux.
+					Un espace unique pour progresser et choisir le bon matériel. L’Atelier regroupe journaux, pas-à-pas et chroniques tandis que le Banc d’essai
+					analyse kits, outils et comparatifs. Toutes les données sont vérifiées (constructeurs, IPMS, clubs) avant publication.
 				</p>
 				<div class="mt-8 flex flex-wrap items-center gap-4 text-[0.7rem] font-semibold uppercase tracking-[0.35em] text-[var(--tm-muted)]">
-					<a
-						class="inline-flex items-center gap-2 rounded-full bg-[var(--tm-lagoon)] px-8 py-3 text-slate-950 shadow-[0_10px_22px_rgba(43,217,197,0.3)]"
-						href={`${base}models/`}
-					>
-						Consulter le catalogue
+					<a class="inline-flex items-center gap-2 rounded-full bg-[var(--tm-lagoon)] px-8 py-3 text-slate-950 shadow-[0_10px_22px_rgba(43,217,197,0.3)]" href={`${base}atelier/`}>
+						Découvrir L’Atelier
 					</a>
-					<span>Catalogue mis à jour à chaque montage</span>
+					<a class="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-xs text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}banc-dessai/`}>
+						Le Banc d’essai
+					</a>
 				</div>
 			</article>
 
 			{featuredModel ? (
 				<aside class="tm-panel flex flex-col justify-between rounded-xl p-7">
 					<div>
-						<p class="brand-pill text-[var(--tm-lumen)]/70">Fiche en avant</p>
+						<p class="brand-pill text-[var(--tm-lumen)]/70">Fiche models en avant</p>
 						<h2 class="mt-4 text-3xl leading-tight">{featuredModel.modelName}</h2>
 						{featuredModel.reference && (
 							<p class="mt-2 text-sm uppercase tracking-[0.35em] text-[var(--tm-muted)]">Référence {featuredModel.reference}</p>
@@ -99,45 +126,20 @@ const referenceShots = [
 			) : null}
 		</section>
 
-		<section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-			{methodology.map((item) => (
-				<article class="tm-panel rounded-xl p-6">
-					<p class="section-label text-[var(--tm-lagoon)]/80">{item.title}</p>
-					<p class="mt-3 text-[var(--tm-muted)]">{item.copy}</p>
-				</article>
-			))}
-		</section>
-
 		<section class="space-y-6">
-			<div class="flex flex-wrap items-end justify-between gap-4">
-				<div>
-					<p class="section-label">Catalogue disponible</p>
-					<h2 class="text-3xl leading-tight">Fiches prêtes à l’emploi</h2>
-					<p class="text-[var(--tm-muted)]">Les références s’ajoutent au fil des montages en cours.</p>
-				</div>
-				<a
-					class="inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]"
-					href="mailto:bonjour@toton-maquette.com"
-				>
-					Proposer une maquette
-				</a>
+			<div>
+				<p class="section-label text-[var(--tm-lagoon)]">L’Atelier</p>
+				<h2 class="text-3xl leading-tight">Découvrir l’espace pédagogique</h2>
+				<p class="text-[var(--tm-muted)]">Journal, tutoriels, chroniques et dossiers historiques réunis en un même hub.</p>
 			</div>
 			<div class="card-grid">
-				{models.map((model) => (
+				{atelierHighlights.map((highlight) => (
 					<article class="tm-panel flex flex-col rounded-xl p-6">
-						<div class="space-y-2">
-							<p class="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--tm-muted)]">
-								{model.manufacturer || 'Toton Maquette'}
-							</p>
-							<h3 class="text-2xl">{model.modelName}</h3>
-							{model.reference && <p class="text-sm text-[var(--tm-muted)]">Référence {model.reference}</p>}
-							<p class="text-[var(--tm-muted)]">{model.summary || 'Consulte la fiche pour découvrir le contenu complet.'}</p>
-						</div>
-						<a
-							class="mt-6 inline-flex items-center justify-between rounded-full border border-white/10 px-4 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]"
-							href={`${base}models/${model.slug}/`}
-						>
-							<span>{model.docs.length} sections documentées</span>
+						<p class="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--tm-muted)]">{highlight.meta}</p>
+						<h3 class="mt-2 text-2xl">{highlight.title}</h3>
+						<p class="mt-3 text-[var(--tm-muted)]">{highlight.description}</p>
+						<a class="mt-6 inline-flex items-center justify-between rounded-full border border-white/10 px-4 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}${highlight.link}`}>
+							<span>Ouvrir</span>
 							<span class="text-[var(--tm-lagoon)]">→</span>
 						</a>
 					</article>
@@ -146,55 +148,96 @@ const referenceShots = [
 		</section>
 
 		<section class="space-y-6">
-			<div>
-				<p class="section-label text-[var(--tm-lagoon)]">Visuels en observation</p>
-				<h2 class="text-3xl leading-tight">Moodboard atelier</h2>
-				<p class="text-[var(--tm-muted)]">
-					Images temporaires issues de banques libres pour cadrer les ambiances : elles seront remplacées par nos photos de montage et nos walkarounds propriétaires.
-				</p>
+			<div class="flex flex-wrap items-end justify-between gap-4">
+				<div>
+					<p class="section-label">Le Banc d’essai</p>
+					<h2 class="text-3xl leading-tight">Derniers tests</h2>
+					<p class="text-[var(--tm-muted)]">Kits, outils et comparatifs passés au crible.</p>
+				</div>
+				<a class="inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}banc-dessai/`}>
+					Accéder à tous les tests
+				</a>
 			</div>
-			<div class="tm-gallery">
-				{referenceShots.map((shot) => (
-					<figure>
-						<img src={shot.image} alt={`${shot.title} – ${shot.subtitle}`} loading="lazy" />
-						<figcaption>{shot.title} – {shot.subtitle}</figcaption>
-					</figure>
+			<div class="card-grid">
+				{latestTests.map((test) => (
+					<article class="tm-panel flex flex-col rounded-xl p-6">
+						<p class="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--tm-muted)]">{test.type}</p>
+						<h3 class="mt-2 text-2xl">{test.title}</h3>
+						<p class="mt-3 text-[var(--tm-muted)]">{test.summary}</p>
+						<ul class="mt-4 space-y-1 text-sm text-[var(--tm-muted)]">
+							{test.tags.map((tag) => (
+								<li>• {tag}</li>
+							))}
+						</ul>
+						<a class="mt-6 inline-flex items-center justify-between rounded-full border border-white/10 px-4 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}${test.link}`}>
+							<span>Lire</span>
+							<span class="text-[var(--tm-lagoon)]">→</span>
+						</a>
+					</article>
 				))}
 			</div>
 		</section>
 
 		<section class="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
 			<div class="tm-panel rounded-xl p-8">
-				<p class="section-label">Mode opératoire</p>
-				<h2 class="mt-3 text-3xl">Comment nous montons une fiche</h2>
+				<p class="section-label">Suivre ma progression</p>
+				<h2 class="mt-3 text-3xl">Journal structuré étape par étape</h2>
+				<p class="mt-4 text-[var(--tm-muted)]">
+					Chaque phase est documentée pour comprendre les blocages et capitaliser sur les solutions. Les entrées renvoient vers les tutoriels ou
+					tests liés pour approfondir.
+				</p>
 				<ul class="mt-6 space-y-3 text-[var(--tm-muted)]">
-					<li>
-						<strong>1.</strong> Repérage des sources (constructeurs, walkarounds, retours concours, archives compagnies).
-					</li>
-					<li>
-						<strong>2.</strong> Saisie des cinq volets (historique, matériel, visuels, tips, synthèse atelier).
-					</li>
-					<li>
-						<strong>3.</strong> Vérification croisée des teintes, antennes, corrections et options.
-					</li>
-					<li>
-						<strong>4.</strong> Relecture éditoriale et publication, suivie des retours clubs/IPMS.
-					</li>
+					{progressTimeline.map((item) => (
+						<li>
+							<strong>{item.phase}</strong> — {item.detail}
+						</li>
+					))}
 				</ul>
+				<a class="mt-6 inline-flex rounded-full bg-[var(--tm-coral)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-slate-950 shadow-[0_10px_22px_rgba(255,143,101,0.3)]" href={`${base}atelier/journal-de-progression/`}>
+					Consulter le journal
+				</a>
 			</div>
 			<div class="rounded-xl border border-white/10 bg-[radial-gradient(circle_at_top,#31216b,#120d26)] p-8">
-				<p class="section-label">Accompagnement</p>
-				<h2 class="mt-3 text-3xl">Besoin d’un dossier spécifique ?</h2>
-				<p class="mt-4 text-[var(--tm-muted)]">
-					Nous priorisons les fiches selon les demandes de la communauté. Partage tes besoins (compagnie, version, échelle) et nous
-					répondrons avec un plan de documentation précis.
-				</p>
-				<a
-					class="mt-6 inline-flex rounded-full bg-[var(--tm-coral)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-slate-950 shadow-[0_10px_22px_rgba(255,143,101,0.3)]"
-					href="mailto:bonjour@toton-maquette.com"
-				>
-					Demander une fiche
+				<p class="section-label">À la une</p>
+				<h2 class="mt-3 text-3xl">{spotlight.title}</h2>
+				<p class="mt-4 text-[var(--tm-muted)]">{spotlight.copy}</p>
+				<ul class="mt-4 space-y-1 text-sm text-[var(--tm-muted)]">
+					{spotlight.stats.map((stat) => (
+						<li>• {stat}</li>
+					))}
+				</ul>
+				<a class="mt-6 inline-flex rounded-full border border-white/30 px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}${spotlight.link}`}>
+					{spotlight.action}
 				</a>
+			</div>
+		</section>
+
+		<section class="space-y-6">
+			<div class="flex flex-wrap items-end justify-between gap-4">
+				<div>
+					<p class="section-label">Catalogue models</p>
+					<h2 class="text-3xl leading-tight">Fiches prêtes à l’emploi</h2>
+					<p class="text-[var(--tm-muted)]">Chaque dossier regroupe historique, matériel, visuels et tips spécifiques.</p>
+				</div>
+				<a class="inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}models/`}>
+					Voir toutes les fiches
+				</a>
+			</div>
+			<div class="card-grid">
+				{models.map((model) => (
+					<article class="tm-panel flex flex-col rounded-xl p-6">
+						<div class="space-y-2">
+							<p class="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--tm-muted)]">{model.manufacturer || 'Toton Maquette'}</p>
+							<h3 class="text-2xl">{model.modelName}</h3>
+							{model.reference && <p class="text-sm text-[var(--tm-muted)]">Référence {model.reference}</p>}
+							<p class="text-[var(--tm-muted)]">{model.summary || 'Consulte la fiche pour découvrir le contenu complet.'}</p>
+						</div>
+						<a class="mt-6 inline-flex items-center justify-between rounded-full border border-white/10 px-4 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}models/${model.slug}/`}>
+							<span>{model.docs.length} sections documentées</span>
+							<span class="text-[var(--tm-lagoon)]">→</span>
+						</a>
+					</article>
+				))}
 			</div>
 		</section>
 	</SiteChrome>
