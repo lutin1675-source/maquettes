@@ -66,11 +66,11 @@ const latestModels = modelEntries.sort((a, b) => a.data.title.localeCompare(b.da
 				<div class="mt-6 grid gap-6 md:grid-cols-3">
 					{latestModels.map((entry) => (
 						<article class="rounded-xl border border-white/10 p-4">
-							{entry.data.coverImage ? (
-								<figure class="mb-4 overflow-hidden rounded-lg border border-white/10">
-									<img class="h-40 w-full object-cover" src={entry.data.coverImage.src} alt={entry.data.coverImage.alt} loading="lazy" />
-								</figure>
-							) : null}
+								{entry.data.coverImage ? (
+									<figure class="tm-card-cover mb-4 border border-white/10">
+										<img class="h-40 w-full object-cover" src={entry.data.coverImage.src} alt={entry.data.coverImage.alt} loading="lazy" />
+									</figure>
+								) : null}
 							<p class="text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)]">{entry.data.manufacturer || 'Fabricant'}</p>
 							<h3 class="tm-card-title mt-2 text-xl">{entry.data.title}</h3>
 							<p class="text-sm text-[var(--tm-muted)]">

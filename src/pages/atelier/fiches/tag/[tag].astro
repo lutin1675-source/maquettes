@@ -81,11 +81,11 @@ const breadcrumbs = [
 				<div class="card-grid">
 					{models.map((entry) => (
 						<article class="tm-panel flex flex-col rounded-xl p-6">
-							{entry.data.coverImage ? (
-								<figure class="mb-4 overflow-hidden rounded-lg border border-white/10">
-									<img class="h-48 w-full object-cover" src={entry.data.coverImage.src} alt={entry.data.coverImage.alt} loading="lazy" />
-								</figure>
-							) : null}
+								{entry.data.coverImage ? (
+									<figure class="tm-card-cover mb-4 border border-white/10">
+										<img class="h-48 w-full object-cover" src={entry.data.coverImage.src} alt={entry.data.coverImage.alt} loading="lazy" />
+									</figure>
+								) : null}
 							<p class="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--tm-muted)]">
 								{entry.data.manufacturer || 'Fabricant'} {entry.data.reference ? `· ${entry.data.reference}` : ''}
 							</p>

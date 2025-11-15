@@ -229,6 +229,49 @@
     @apply grid gap-6 sm:grid-cols-2 xl:grid-cols-3;
   }
 
+  .tm-card-cover {
+    position: relative;
+    overflow: hidden;
+    border-radius: calc(var(--tm-radius) - 0.5rem);
+    isolation: isolate;
+  }
+
+  .tm-card-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.75) brightness(0.9);
+    transition: transform 0.5s ease, filter 0.5s ease;
+  }
+
+  .tm-card-cover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(145deg, rgba(6, 10, 22, 0.55), rgba(84, 48, 128, 0.35)),
+      radial-gradient(circle at 15% 20%, rgba(26, 181, 161, 0.25), transparent 60%);
+    mix-blend-mode: multiply;
+    opacity: 0.85;
+    pointer-events: none;
+  }
+
+  html[data-theme='light'] .tm-card-cover::after {
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(190, 214, 255, 0.75)),
+      radial-gradient(circle at 70% 20%, rgba(255, 181, 209, 0.55), transparent 65%);
+    mix-blend-mode: screen;
+    opacity: 0.75;
+  }
+
+  .tm-panel:hover .tm-card-cover img,
+  .tm-panel:focus-within .tm-card-cover img,
+  .rounded-xl:hover .tm-card-cover img,
+  .rounded-xl:focus-within .tm-card-cover img {
+    transform: scale(1.03);
+    filter: saturate(1) brightness(1);
+  }
+
   .tm-article-layout {
     display: flex;
     flex-direction: column;
