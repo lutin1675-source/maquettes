@@ -29,6 +29,9 @@
     --tm-text: #eef2ff;
     --tm-card-heading: #f9fbff;
     --tm-pill: #dfe96b;
+    --tm-pattern-color: rgba(255, 255, 255, 0.035);
+    --tm-pattern-size: 46px;
+    --tm-shell-glow: rgba(139, 127, 255, 0.18);
     --tm-muted: #98a6d7;
     --tm-lagoon-glow: rgba(43, 217, 197, 0.18);
     --tm-coral-glow: rgba(255, 143, 101, 0.22);
@@ -67,6 +70,9 @@
     --tm-text: #1f1f2e;
     --tm-card-heading: #0f1428;
     --tm-pill: #6c721f;
+    --tm-pattern-color: rgba(0, 0, 0, 0.025);
+    --tm-pattern-size: 52px;
+    --tm-shell-glow: rgba(162, 210, 255, 0.05);
     --tm-muted: #5b5b73;
     --tm-lagoon-glow: rgba(162, 210, 255, 0.08);
     --tm-coral-glow: rgba(255, 175, 204, 0.05);
@@ -207,10 +213,17 @@
     }
   }
 
- .tm-shell {
+  .tm-shell {
     background:
-      radial-gradient(circle at top left, rgba(139, 127, 255, 0.18), transparent 60%),
+      linear-gradient(0deg, var(--tm-pattern-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--tm-pattern-color) 1px, transparent 1px),
+      radial-gradient(circle at top left, var(--tm-shell-glow), transparent 60%),
       var(--tm-space);
+    background-size:
+      var(--tm-pattern-size) var(--tm-pattern-size),
+      var(--tm-pattern-size) var(--tm-pattern-size),
+      auto,
+      auto;
     color: var(--tm-text);
     min-height: 100vh;
   }
@@ -342,11 +355,6 @@
   html[data-theme='light'] .tm-button-outline {
     border-color: rgba(0, 0, 0, 0.15);
     color: var(--tm-muted);
-  }
-  html[data-theme='light'] .tm-shell {
-    background:
-      radial-gradient(circle at top left, rgba(162, 210, 255, 0.05), transparent 70%),
-      var(--tm-space);
   }
   .tm-accent {
     color: var(--tm-lumen);
