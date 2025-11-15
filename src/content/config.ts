@@ -93,6 +93,16 @@ const modelSectionSchema = z.object({
 	body: z.string(),
 });
 
+const imageField = z.object({
+	src: z.string(),
+	alt: z.string(),
+	credit: z.string().optional(),
+});
+
+const galleryImageField = imageField.extend({
+	caption: z.string().optional(),
+});
+
 const modelSchema = z.object({
 	title: z.string(),
 	manufacturer: z.string().optional(),
@@ -100,6 +110,10 @@ const modelSchema = z.object({
 	scale: z.string().optional(),
 	summary: z.string(),
 	intro: z.string(),
+	coverImage: imageField.optional(),
+	boxImage: imageField.optional(),
+	historyImage: imageField.optional(),
+	buildImages: z.array(galleryImageField).min(1).optional(),
 	tags: z.array(z.string()).optional(),
 	sections: z.array(modelSectionSchema),
 	sources: z.array(z.string()).optional(),

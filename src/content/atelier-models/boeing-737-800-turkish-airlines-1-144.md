@@ -5,6 +5,22 @@ reference: "03772"
 scale: "1/144"
 summary: "Dossier complet pour monter la nouvelle édition Revell 03772 décorée Turkish Airlines : historique, matériel, visuels et astuces d’assemblage."
 intro: "Ce dossier rassemble toutes les informations nécessaires pour monter la nouvelle édition Revell 1/144 (réf. 03772) décorée aux couleurs Turkish Airlines, du contexte historique jusqu’aux astuces de finition."
+coverImage:
+  src: "https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&w=1000&q=80"
+  alt: "Boeing 737-800 Turkish Airlines au roulage en plein jour"
+boxImage:
+  src: "https://images.unsplash.com/photo-1508182311256-e3f9c8c70f57?auto=format&fit=crop&w=900&q=80"
+  alt: "Boîte Revell de liner civil posée sur un établi"
+historyImage:
+  src: "https://images.unsplash.com/photo-1504197885-609741792ce7?auto=format&fit=crop&w=1000&q=80"
+  alt: "Boeing 737-800 Turkish Airlines en approche finale"
+buildImages:
+  - src: "https://images.unsplash.com/photo-1489516408517-0c0a15662682?auto=format&fit=crop&w=900&q=80"
+    alt: "Montage du fuselage avec pinces et outils"
+    caption: "Fermeture du fuselage et contrôle des joints avant apprêt."
+  - src: "https://images.unsplash.com/photo-1511300636408-a63a89df3482?auto=format&fit=crop&w=900&q=80"
+    alt: "Peinture au-dessus de la maquette avec aérographe"
+    caption: "Aérographe en cours pour le blanc brillant et la tulipe grise."
 tags:
   - "liner"
   - "1/144"

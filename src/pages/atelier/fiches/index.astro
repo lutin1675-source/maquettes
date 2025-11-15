@@ -34,13 +34,18 @@ const models = entries.sort((a, b) => a.data.title.localeCompare(b.data.title));
 					Suggérer une fiche
 				</a>
 			</div>
-			{models.length ? (
-				<div class="card-grid">
-					{models.map((entry) => (
-						<article class="tm-panel flex flex-col rounded-xl p-6">
-							<p class="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--tm-muted)]">
-								{entry.data.manufacturer || 'Fabricant'} {entry.data.reference ? `· ${entry.data.reference}` : ''}
-							</p>
+				{models.length ? (
+					<div class="card-grid">
+						{models.map((entry) => (
+							<article class="tm-panel flex flex-col rounded-xl p-6">
+								{entry.data.coverImage ? (
+									<figure class="mb-4 overflow-hidden rounded-lg border border-white/10">
+										<img class="h-48 w-full object-cover" src={entry.data.coverImage.src} alt={entry.data.coverImage.alt} loading="lazy" />
+									</figure>
+								) : null}
+								<p class="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--tm-muted)]">
+									{entry.data.manufacturer || 'Fabricant'} {entry.data.reference ? `· ${entry.data.reference}` : ''}
+								</p>
 							<h3 class="tm-card-title mt-2 text-2xl">{entry.data.title}</h3>
 							{entry.data.scale ? <p class="text-sm text-[var(--tm-muted)]">Échelle {entry.data.scale}</p> : null}
 						<p class="mt-3 text-[var(--tm-muted)]">{entry.data.summary}</p>

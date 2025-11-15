@@ -5,6 +5,22 @@ reference: "03791"
 scale: "1/144"
 summary: "Dossier complet pour monter l’édition Revell 03791 du BAe 146‑200 / Avro RJ85 : historique, matériel, visuels et astuces d’assemblage."
 intro: "Ce dossier rassemble toutes les informations nécessaires pour monter l’édition Revell 1/144 (réf. 03791) du BAe 146‑200 / Avro RJ85, depuis le contexte historique de l’avion jusqu’aux conseils de finition pour maquettistes."
+coverImage:
+  src: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1000&q=80"
+  alt: "Avro RJ85 en livrée régionale sur le tarmac"
+boxImage:
+  src: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=900&q=80"
+  alt: "Boîte Revell BAe 146 posée sur une plaque de découpe"
+historyImage:
+  src: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1000&q=80"
+  alt: "Avion régional BAe 146-200 en approche au coucher du soleil"
+buildImages:
+  - src: "https://images.unsplash.com/photo-1508182215322-c5c7a3901a30?auto=format&fit=crop&w=900&q=80"
+    alt: "Assemblage d'une maquette BAe 146 sur tapis de découpe"
+    caption: "Contrôle des ajustements aile/fuselage avant apprêt."
+  - src: "https://images.unsplash.com/photo-1514316454349-750a7fd3da4e?auto=format&fit=crop&w=900&q=80"
+    alt: "Maquette d'avion civil en peinture"
+    caption: "Masquage des sections métalliques avant vernis satiné."
 tags:
   - "liner"
   - "1/144"

@@ -18,6 +18,8 @@ Tout le contenu vit dans `src/content/` :
 - `info-pages/` : pages À propos, Contact, etc. avec sections type cartes/listes.
 - `atelier-models/*.md` : fiches de montage concrètes. Frontmatter requis :
   - `title`, `manufacturer`, `reference`, `scale`, `summary`, `intro`
+  - `coverImage`, `boxImage`, `historyImage`: objets `{ src, alt, credit? }` fortement recommandés (si absents, la fiche reste publiée mais sans visuel correspondant).
+  - `buildImages`: tableau d’objets `{ src, alt, caption?, credit? }` (minimum une entrée lorsque présent) pour documenter la réalisation.
   - `sections`: tableau `{ id, title, body }` où `body` est du Markdown (historique, matériel, visuels, conseils, etc.).
   - `sources`: liste des références citées.
   - `tags`: liste de mots-clés (ex. `liner`, `1/144`, `Revell`). Ils alimentent automatiquement les pages `/atelier/fiches/tag/<tag>` quand on clique sur un badge.
