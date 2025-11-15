@@ -10,68 +10,6 @@ const pageTitle =
 	Astro.props?.title && Astro.props?.title !== SITE.title ? `${Astro.props.title} – ${SITE.title}` : SITE.title;
 const pageDescription = Astro.props?.description ?? SITE.description;
 const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname;
-const themeScript = `
-(() => {
-	const storageKey = 'tm-theme';
-	const root = document.documentElement;
-	const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-	const readStoredTheme = () => {
-		try {
-			return localStorage.getItem(storageKey);
-		} catch (err) {
-			console.warn('Stockage thème inaccessible', err);
-			return null;
-		}
-	};
-
-	const setTheme = (theme, persist = false) => {
-		root.setAttribute('data-theme', theme);
-		window.dispatchEvent(new CustomEvent('tm-theme-change', { detail: theme }));
-
-		if (persist) {
-			try {
-				localStorage.setItem(storageKey, theme);
-			} catch (err) {
-				console.warn('Impossible de stocker le thème', err);
-			}
-		}
-	};
-
-	const stored = readStoredTheme();
-	if (stored) {
-		setTheme(stored);
-	} else {
-		setTheme(mediaQuery.matches ? 'dark' : 'light');
-		const mediaListener = (event) => {
-			if (!readStoredTheme()) {
-				setTheme(event.matches ? 'dark' : 'light');
-			}
-		};
-		if (typeof mediaQuery.addEventListener === 'function') {
-			mediaQuery.addEventListener('change', mediaListener);
-		} else if (typeof mediaQuery.addListener === 'function') {
-			mediaQuery.addListener(mediaListener);
-		}
-	}
-
-	window.tmTheme = {
-		set(theme) {
-			setTheme(theme, true);
-		},
-		get() {
-			return root.getAttribute('data-theme') || 'dark';
-		},
-		clear() {
-			try {
-				localStorage.removeItem(storageKey);
-			} catch (err) {
-				console.warn('Impossible de nettoyer le thème', err);
-			}
-		},
-	};
-})();
-`;
 ---
 
 <!doctype html>
@@ -86,10 +24,83 @@ const themeScript = `
 		<meta property="og:description" content={pageDescription} />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={canonicalUrl} />
+		<script is:inline>
+			(function () {
+				const storageKey = 'tm-theme';
+				const root = document.documentElement;
+				const supportsMatchMedia = typeof window.matchMedia === 'function';
+				const mediaQuery = supportsMatchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+				const readStoredTheme = () => {
+					try {
+						return localStorage.getItem(storageKey);
+					} catch (err) {
+						console.warn('Stockage thème inaccessible', err);
+						return null;
+					}
+				};
+
+				const applyTheme = (theme, persist = false) => {
+					root.setAttribute('data-theme', theme);
+					try {
+						window.dispatchEvent(new CustomEvent('tm-theme-change', { detail: theme }));
+					} catch (err) {
+						/* noop */
+					}
+
+					if (persist) {
+						try {
+							localStorage.setItem(storageKey, theme);
+						} catch (err) {
+							console.warn('Impossible de stocker le thème', err);
+						}
+					}
+				};
+
+				const stored = readStoredTheme();
+				if (stored) {
+					applyTheme(stored);
+				} else if (mediaQuery) {
+					applyTheme(mediaQuery.matches ? 'dark' : 'light');
+					const mediaListener = (event) => {
+						if (!readStoredTheme()) {
+							applyTheme(event.matches ? 'dark' : 'light');
+						}
+					};
+					if (typeof mediaQuery.addEventListener === 'function') {
+						mediaQuery.addEventListener('change', mediaListener);
+					} else if (typeof mediaQuery.addListener === 'function') {
+						mediaQuery.addListener(mediaListener);
+					}
+				} else {
+					applyTheme('dark');
+				}
+
+				window.tmTheme = {
+					set(theme) {
+						applyTheme(theme, true);
+					},
+					get() {
+						return root.getAttribute('data-theme') || 'dark';
+					},
+					clear() {
+						try {
+							localStorage.removeItem(storageKey);
+						} catch (err) {
+							console.warn('Impossible de nettoyer le thème', err);
+						}
+						if (mediaQuery) {
+							applyTheme(mediaQuery.matches ? 'dark' : 'light');
+						} else {
+							applyTheme('dark');
+						}
+					},
+				};
+			})();
+		</script>
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={pageTitle} />
 		<meta name="twitter:description" content={pageDescription} />
-		<script is:inline>{themeScript}</script>
 	</head>
 	<body class="tm-body min-h-screen">
 		<slot />
