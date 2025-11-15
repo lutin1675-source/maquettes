@@ -1,0 +1,97 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SiteChrome from '../../components/SiteChrome.astro';
+import { getEntry, getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL || '/';
+const hubEntry = await getEntry('atelier-hub', 'overview');
+const hub = hubEntry.data;
+const guideEntries = await getCollection('atelier-guides');
+const atelierGuides = guideEntries.sort((a, b) => a.data.order - b.data.order);
+const modelEntries = await getCollection('atelier-models');
+const latestModels = modelEntries.sort((a, b) => a.data.title.localeCompare(b.data.title)).slice(0, 3);
+---
+
+<Layout title={hub.title} description={hub.description}>
+	<SiteChrome className="space-y-10">
+		<section class="tm-panel rounded-xl p-8">
+			<p class="section-label text-[var(--tm-lagoon)]">{hub.introLabel}</p>
+			<h1 class="mt-3 text-4xl leading-tight">{hub.introTitle}</h1>
+			<p class="mt-4 text-[var(--tm-muted)]">{hub.introDescription}</p>
+			<div class="mt-6 grid gap-4 md:grid-cols-2">
+				{hub.editorialNotes?.map((note) => (
+					<p class="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-[var(--tm-muted)]">{note}</p>
+				))}
+			</div>
+		</section>
+
+		<section class="tm-panel rounded-xl p-8">
+			<h2 class="text-3xl leading-tight">Parcours recommandé</h2>
+			<p class="mt-3 text-[var(--tm-muted)]">Voici les quatre sous-pages permanentes. Chaque fiche s’ouvre avec une navigation latérale et un fil d’Ariane.</p>
+			<ul class="mt-5 space-y-4">
+				{atelierGuides.map((entry) => (
+					<li class="flex flex-col gap-1 border-b border-white/10 pb-4 last:border-0 last:pb-0">
+						<div class="flex flex-wrap items-center justify-between gap-3">
+							<div>
+								<p class="text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)]">Section</p>
+								<h3 class="text-2xl">{entry.data.title}</h3>
+							</div>
+							<a class="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.3em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}atelier/${entry.slug}/`}>
+								Ouvrir <span class="text-[var(--tm-lagoon)]">→</span>
+							</a>
+						</div>
+						<p class="text-[var(--tm-muted)]">{entry.data.summary}</p>
+						<ul class="mt-2 space-y-1 text-sm text-[var(--tm-muted)]">
+							{entry.data.highlights.map((item) => (
+								<li>• {item}</li>
+							))}
+						</ul>
+					</li>
+				))}
+			</ul>
+		</section>
+
+		{latestModels.length ? (
+			<section class="tm-panel rounded-xl p-8">
+				<div class="flex flex-wrap items-center justify-between gap-4">
+					<div>
+						<p class="section-label text-[var(--tm-lagoon)]">Fiches atelier</p>
+						<h2 class="text-3xl leading-tight">Dossiers prêts à l’emploi</h2>
+						<p class="text-[var(--tm-muted)]">Sélection des fiches actuellement disponibles.</p>
+					</div>
+					<a class="inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}atelier/fiches/`}>
+						Voir toutes les fiches
+					</a>
+				</div>
+				<div class="mt-6 grid gap-6 md:grid-cols-3">
+					{latestModels.map((entry) => (
+						<article class="rounded-xl border border-white/10 p-4">
+							<p class="text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)]">{entry.data.manufacturer || 'Fabricant'}</p>
+							<h3 class="mt-2 text-xl">{entry.data.title}</h3>
+							<p class="text-sm text-[var(--tm-muted)]">
+								{entry.data.scale ? `Échelle ${entry.data.scale}` : null} {entry.data.reference ? `· Réf. ${entry.data.reference}` : ''}
+							</p>
+							<p class="mt-3 text-[var(--tm-muted)]">{entry.data.summary}</p>
+							<a class="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-lagoon)]" href={`${base}atelier/fiches/${entry.slug}/`}>
+								Ouvrir →
+							</a>
+						</article>
+					))}
+				</div>
+			</section>
+		) : null}
+
+		{hub.contributeSteps ? (
+			<section class="tm-panel rounded-xl p-8">
+				<h2 class="text-3xl leading-tight">Comment contribuer</h2>
+				<ol class="mt-6 space-y-3 text-[var(--tm-muted)]">
+					{hub.contributeSteps.map((step, index) => (
+						<li>
+							<strong>{index + 1}.</strong> {step}
+						</li>
+					))}
+				</ol>
+			</section>
+		) : null}
+	</SiteChrome>
+</Layout>

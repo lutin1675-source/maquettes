@@ -1,0 +1,133 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SiteChrome from '../../components/SiteChrome.astro';
+import SectionSidebar from '../../components/SectionSidebar.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL || '/';
+const currentSlug = 'comparatifs';
+const guideEntries = await getCollection('banc-guides');
+const sortedGuides = guideEntries.sort((a, b) => a.data.order - b.data.order);
+const navPages = sortedGuides.map((entry) => ({
+	slug: entry.slug,
+	title: entry.data.title,
+}));
+const currentIndex = navPages.findIndex((page) => page.slug === currentSlug);
+const currentGuide = sortedGuides[currentIndex];
+if (!currentGuide) {
+	throw new Error(`Guide ${currentSlug} manquant`);
+}
+const { data } = currentGuide;
+const previousPage = currentIndex > 0 ? navPages[currentIndex - 1] : null;
+const nextPage = currentIndex < navPages.length - 1 ? navPages[currentIndex + 1] : null;
+const docSections = data.docSections;
+const flowSections = [{ id: 'introduction', title: data.introTitle }, ...docSections];
+const nextTargets = flowSections.reduce<Record<string, { href: string; label: string }>>((acc, section, index) => {
+	const nextSection = flowSections[index + 1];
+	if (nextSection) {
+		acc[section.id] = { href: `#${nextSection.id}`, label: `Section suivante : ${nextSection.title}` };
+	} else if (nextPage) {
+		acc[section.id] = { href: `${base}banc-dessai/${nextPage.slug}/`, label: `Fiche suivante : ${nextPage.title}` };
+	} else {
+		acc[section.id] = { href: `${base}banc-dessai/`, label: 'Retour au Banc d’essai' };
+	}
+	return acc;
+}, {});
+---
+
+<Layout title={data.title} description={data.description}>
+	<SiteChrome className="space-y-8">
+		<nav class="text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)]">
+			{data.breadcrumbs.map((crumb, index) => (
+				<span>
+					{crumb.href ? (
+						<a class={index === data.breadcrumbs.length - 1 ? 'text-[var(--tm-text)]' : 'text-[var(--tm-lagoon)]'} href={crumb.href}>
+							{crumb.label}
+						</a>
+					) : (
+						<span>{crumb.label}</span>
+					)}
+					{index < data.breadcrumbs.length - 1 ? <span class="px-2 text-[var(--tm-muted)]/60">/</span> : null}
+				</span>
+			))}
+		</nav>
+
+		<section class="tm-article-layout">
+			<SectionSidebar currentSlug={currentSlug} sections={docSections} pages={navPages} basePath="banc-dessai" />
+			<div class="space-y-6">
+				<section id="introduction" class="tm-panel rounded-xl p-8">
+					<p class="section-label text-[var(--tm-lagoon)]">{data.introLabel}</p>
+					<h1 class="mt-4 text-4xl leading-tight">{data.introTitle}</h1>
+					<p class="mt-4 text-[var(--tm-muted)]">{data.introBody}</p>
+					{nextTargets.introduction ? (
+						<div class="mt-6 flex justify-end">
+							<a class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.4em] text-[var(--tm-lagoon)]" href={nextTargets.introduction.href}>
+								{nextTargets.introduction.label} →
+							</a>
+						</div>
+					) : null}
+				</section>
+
+				{docSections.map((section) => (
+					<section id={section.id} class="tm-panel rounded-xl p-8">
+						<h2 class="text-3xl leading-tight">{section.title}</h2>
+						{section.type === 'list' ? (
+							<ul class="mt-5 space-y-2 text-[var(--tm-muted)]">
+								{section.items.map((item) => (
+									<li>• {item}</li>
+								))}
+							</ul>
+						) : section.type === 'cards' ? (
+							<div class="mt-5 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+								{section.cards.map((card) => (
+									<article class="rounded-xl border border-white/10 p-4">
+										<p class="text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)]">{card.meta || 'Exemple'}</p>
+										<h3 class="mt-2 text-xl">{card.title}</h3>
+										{card.description ? <p class="mt-2 text-[var(--tm-muted)]">{card.description}</p> : null}
+										{card.details ? (
+											<ul class="mt-3 space-y-1 text-sm text-[var(--tm-muted)]">
+												{card.details.map((detail) => (
+													<li>• {detail}</li>
+												))}
+											</ul>
+										) : null}
+									</article>
+								))}
+							</div>
+						) : (
+							<p class="mt-5 text-[var(--tm-muted)]">{section.body}</p>
+						)}
+						{nextTargets[section.id] ? (
+							<div class="mt-6 flex justify-end">
+								<a class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.4em] text-[var(--tm-lagoon)]" href={nextTargets[section.id].href}>
+									{nextTargets[section.id].label} →
+								</a>
+							</div>
+						) : null}
+					</section>
+				))}
+			</div>
+		</section>
+
+		<nav class="flex flex-wrap items-center justify-between gap-4">
+			{previousPage ? (
+				<a class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.45em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}banc-dessai/${previousPage.slug}/`}>
+					← {previousPage.title}
+				</a>
+			) : (
+				<a class="text-xs uppercase tracking-[0.45em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}banc-dessai/`}>
+					← Retour Banc d’essai
+				</a>
+			)}
+			{nextPage ? (
+				<a class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.45em] text-[var(--tm-lagoon)]" href={`${base}banc-dessai/${nextPage.slug}/`}>
+					{nextPage.title} →
+				</a>
+			) : (
+				<a class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.45em] text-[var(--tm-lagoon)]" href={`${base}banc-dessai/`}>
+					Fin de parcours →
+				</a>
+			)}
+		</nav>
+	</SiteChrome>
+</Layout>

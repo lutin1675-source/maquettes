@@ -1,0 +1,73 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import SiteChrome from '../../../components/SiteChrome.astro';
+import { getCollection } from 'astro:content';
+import { slugify } from '../../../lib/slug';
+
+const base = import.meta.env.BASE_URL || '/';
+const entries = await getCollection('atelier-models');
+const models = entries.sort((a, b) => a.data.title.localeCompare(b.data.title));
+---
+
+<Layout title="Fiches atelier" description="Dossiers prêts à l’emploi pour monter un kit précis.">
+	<SiteChrome className="space-y-10">
+		<section class="tm-panel rounded-xl p-8">
+			<p class="section-label text-[var(--tm-lagoon)]">L’Atelier</p>
+			<h1 class="mt-3 text-4xl leading-tight">Fiches de montage documentées</h1>
+			<p class="mt-4 text-[var(--tm-muted)]">
+				Chaque fiche rassemble historique, matériel, visuels et conseils spécifiques à un kit. Elles s’enrichissent au fur et à mesure des montages et des retours
+				de la communauté.
+			</p>
+		</section>
+
+		<section class="space-y-6">
+			<div class="flex flex-wrap items-end justify-between gap-4">
+				<div>
+					<p class="section-label">Catalogue atelier</p>
+					<h2 class="text-3xl leading-tight">Fiches disponibles</h2>
+					<p class="text-[var(--tm-muted)]">Liste amenée à grandir selon les demandes.</p>
+				</div>
+				<a
+					class="inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]"
+					href="mailto:bonjour@toton-maquette.com"
+				>
+					Suggérer une fiche
+				</a>
+			</div>
+			{models.length ? (
+				<div class="card-grid">
+					{models.map((entry) => (
+						<article class="tm-panel flex flex-col rounded-xl p-6">
+							<p class="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--tm-muted)]">
+								{entry.data.manufacturer || 'Fabricant'} {entry.data.reference ? `· ${entry.data.reference}` : ''}
+							</p>
+							<h3 class="mt-2 text-2xl">{entry.data.title}</h3>
+							{entry.data.scale ? <p class="text-sm text-[var(--tm-muted)]">Échelle {entry.data.scale}</p> : null}
+						<p class="mt-3 text-[var(--tm-muted)]">{entry.data.summary}</p>
+						{entry.data.tags?.length ? (
+							<ul class="mt-3 flex flex-wrap gap-2 text-[0.65rem] uppercase tracking-[0.3em] text-[var(--tm-muted)]">
+								{entry.data.tags.map((tag) => (
+									<li>
+										<a class="rounded-full border border-white/15 px-3 py-1 hover:text-[var(--tm-lumen)]" href={`${base}atelier/fiches/tag/${slugify(tag)}/`}>
+											{tag}
+										</a>
+									</li>
+								))}
+							</ul>
+						) : null}
+						<a
+							class="mt-6 inline-flex items-center justify-between rounded-full border border-white/10 px-4 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]"
+							href={`${base}atelier/fiches/${entry.slug}/`}
+							>
+								<span>Consulter</span>
+								<span class="text-[var(--tm-lagoon)]">→</span>
+							</a>
+						</article>
+					))}
+				</div>
+			) : (
+				<p class="text-[var(--tm-muted)]">Les premières fiches seront publiées prochainement.</p>
+			)}
+		</section>
+	</SiteChrome>
+</Layout>

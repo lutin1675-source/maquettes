@@ -1,0 +1,60 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SiteChrome from '../../components/SiteChrome.astro';
+import { getEntry, getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL || '/';
+const hubEntry = await getEntry('banc-hub', 'overview');
+const hub = hubEntry.data;
+const guideEntries = await getCollection('banc-guides');
+const bancGuides = guideEntries.sort((a, b) => a.data.order - b.data.order);
+---
+
+<Layout title={hub.title} description={hub.description}>
+	<SiteChrome className="space-y-10">
+		<section class="tm-panel rounded-xl p-8">
+			<p class="section-label text-[var(--tm-lagoon)]">{hub.introLabel}</p>
+			<h1 class="mt-3 text-4xl leading-tight">{hub.introTitle}</h1>
+			<p class="mt-4 text-[var(--tm-muted)]">{hub.introDescription}</p>
+		</section>
+
+		<section class="tm-panel rounded-xl p-8">
+			<h2 class="text-3xl leading-tight">Méthode</h2>
+			<ol class="mt-5 space-y-3 text-[var(--tm-muted)]">
+				{hub.workflow?.map((step, index) => (
+					<li>
+						<strong>{index + 1}.</strong> {step}
+					</li>
+				))}
+			</ol>
+		</section>
+
+		<section class="space-y-6">
+			<div>
+				<p class="section-label">Sous-pages</p>
+				<h2 class="text-3xl leading-tight">Un espace dédié par type de test</h2>
+			</div>
+			<div class="card-grid">
+				{bancGuides.map((entry) => (
+					<article class="tm-panel flex flex-col rounded-xl p-6">
+						<p class="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--tm-muted)]">Rubrique</p>
+						<h3 class="mt-2 text-2xl">{entry.data.title}</h3>
+						<p class="mt-3 text-[var(--tm-muted)]">{entry.data.summary}</p>
+						<ul class="mt-4 space-y-1 text-sm text-[var(--tm-muted)]">
+							{entry.data.highlights.map((point) => (
+								<li>• {point}</li>
+							))}
+						</ul>
+						<a
+							class="mt-6 inline-flex items-center justify-between rounded-full border border-white/15 px-4 py-2 text-xs uppercase tracking-[0.4em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]"
+							href={`${base}banc-dessai/${entry.slug}/`}
+						>
+							<span>Consulter</span>
+							<span class="text-[var(--tm-lagoon)]">→</span>
+						</a>
+					</article>
+				))}
+			</div>
+		</section>
+	</SiteChrome>
+</Layout>

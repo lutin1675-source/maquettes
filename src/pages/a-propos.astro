@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteChrome from '../components/SiteChrome.astro';
+import { getEntry } from 'astro:content';
+
+const entry = await getEntry('info-pages', 'a-propos');
+const data = entry.data;
+---
+
+<Layout title={data.title} description={data.description}>
+	<SiteChrome className="space-y-10">
+		<section class="tm-panel rounded-xl p-8">
+			<p class="section-label text-[var(--tm-lagoon)]">{data.heroLabel}</p>
+			<h1 class="mt-4 text-4xl leading-tight">{data.heroTitle}</h1>
+			<p class="mt-4 text-[var(--tm-muted)]">{data.heroBody}</p>
+		</section>
+
+		{data.sections.map((section) =>
+			section.type === 'cards' ? (
+				<section class="grid gap-6 md:grid-cols-3">
+					{section.cards.map((card) => (
+						<article class="tm-panel rounded-xl p-6">
+							<p class="text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)]">{card.label}</p>
+							{card.value ? <p class="mt-3 text-2xl">{card.value}</p> : null}
+							<p class="mt-2 text-[var(--tm-muted)]">{card.description}</p>
+						</article>
+					))}
+				</section>
+			) : (
+				<section class="tm-panel rounded-xl p-8">
+					<h2 class="text-3xl leading-tight">{section.title}</h2>
+					<ul class="mt-5 space-y-2 text-[var(--tm-muted)]">
+						{section.items.map((item) => (
+							<li>• {item}</li>
+						))}
+					</ul>
+				</section>
+			),
+		)}
+	</SiteChrome>
+</Layout>
+---

@@ -1,0 +1,109 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import SiteChrome from '../../../../components/SiteChrome.astro';
+import { getCollection } from 'astro:content';
+import { slugify } from '../../../../lib/slug';
+
+export async function getStaticPaths() {
+	const entries = await getCollection('atelier-models');
+	const tagMap = new Map<string, string>();
+	entries.forEach((entry) => {
+		entry.data.tags?.forEach((tag) => {
+			const tagSlug = slugify(tag);
+			if (!tagMap.has(tagSlug)) {
+				tagMap.set(tagSlug, tag);
+			}
+		});
+	});
+
+	return Array.from(tagMap.entries()).map(([tagSlug, tagLabel]) => ({
+		params: { tag: tagSlug },
+		props: { tagSlug, tagLabel },
+	}));
+}
+
+const { tagSlug, tagLabel } = Astro.props as { tagSlug: string; tagLabel: string };
+const base = import.meta.env.BASE_URL || '/';
+const entries = await getCollection('atelier-models');
+const models = entries
+	.filter((entry) => entry.data.tags?.some((tag) => slugify(tag) === tagSlug))
+	.sort((a, b) => a.data.title.localeCompare(b.data.title));
+const availableTags = Array.from(
+	new Map<string, string>(
+		entries.flatMap((entry) => entry.data.tags?.map((tag) => [slugify(tag), tag]) || []),
+	),
+);
+const breadcrumbs = [
+	{ label: 'Accueil', href: base },
+	{ label: 'L’Atelier', href: `${base}atelier/` },
+	{ label: 'Fiches atelier', href: `${base}atelier/fiches/` },
+	{ label: `Tag : ${tagLabel}` },
+];
+---
+
+<Layout title={`Fiches – ${tagLabel}`} description={`Toutes les fiches atelier associées au tag ${tagLabel}.`}>
+	<SiteChrome className="space-y-10">
+		<nav class="text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)]">
+			{breadcrumbs.map((crumb, index) => (
+				<span>
+					{crumb.href ? (
+						<a class={index === breadcrumbs.length - 1 ? 'text-[var(--tm-text)]' : 'text-[var(--tm-lagoon)]'} href={crumb.href}>
+							{crumb.label}
+						</a>
+					) : (
+						<span>{crumb.label}</span>
+					)}
+					{index < breadcrumbs.length - 1 ? <span class="px-2 text-[var(--tm-muted)]/60">/</span> : null}
+				</span>
+			))}
+		</nav>
+
+		<section class="tm-panel rounded-xl p-8">
+			<p class="section-label text-[var(--tm-lagoon)]">Tag</p>
+			<h1 class="mt-3 text-4xl leading-tight">Fiches : {tagLabel}</h1>
+			<p class="mt-4 text-[var(--tm-muted)]">
+				Sélection des fiches atelier correspondant au tag <strong>{tagLabel}</strong>. Clique sur un autre tag pour changer de filtre.
+			</p>
+			<div class="mt-6 flex flex-wrap gap-2 text-[0.65rem] uppercase tracking-[0.3em] text-[var(--tm-muted)]">
+				{availableTags.map(([slug, label]) => (
+					<a
+						class={`rounded-full border px-3 py-1 ${slug === tagSlug ? 'border-[var(--tm-lagoon)] text-[var(--tm-lagoon)]' : 'border-white/15 hover:text-[var(--tm-lumen)]'}`}
+						href={`${base}atelier/fiches/tag/${slug}/`}
+					>
+						{label}
+					</a>
+				))}
+			</div>
+		</section>
+
+		<section class="space-y-6">
+			{models.length ? (
+				<div class="card-grid">
+					{models.map((entry) => (
+						<article class="tm-panel flex flex-col rounded-xl p-6">
+							<p class="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--tm-muted)]">
+								{entry.data.manufacturer || 'Fabricant'} {entry.data.reference ? `· ${entry.data.reference}` : ''}
+							</p>
+							<h3 class="mt-2 text-2xl">{entry.data.title}</h3>
+							{entry.data.scale ? <p class="text-sm text-[var(--tm-muted)]">Échelle {entry.data.scale}</p> : null}
+							<p class="mt-3 text-[var(--tm-muted)]">{entry.data.summary}</p>
+							<a
+								class="mt-6 inline-flex items-center justify-between rounded-full border border-white/10 px-4 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]"
+								href={`${base}atelier/fiches/${entry.slug}/`}
+							>
+								<span>Ouvrir</span>
+								<span class="text-[var(--tm-lagoon)]">→</span>
+							</a>
+						</article>
+					))}
+				</div>
+			) : (
+				<p class="text-[var(--tm-muted)]">Aucune fiche n’est encore associée à ce tag.</p>
+			)}
+		</section>
+
+		<a class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}atelier/fiches/`}>
+			← Retour aux fiches
+		</a>
+	</SiteChrome>
+</Layout>

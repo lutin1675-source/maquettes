@@ -1,0 +1,54 @@
+---
+type SectionEntry = {
+	id: string;
+	title: string;
+};
+
+type NavPage = {
+	slug: string;
+	title: string;
+};
+
+const { currentSlug, sections, pages, basePath } = Astro.props as {
+	currentSlug: string;
+	sections: SectionEntry[];
+	pages: NavPage[];
+	basePath: string;
+};
+
+const base = import.meta.env.BASE_URL || '/';
+const normalizedBasePath = basePath.replace(/^\//, '').replace(/\/$/, '');
+const pagePrefix = normalizedBasePath ? `${base}${normalizedBasePath}/` : base;
+---
+
+<aside class="tm-panel tm-sidebar rounded-xl p-6">
+	<p class="section-label text-[var(--tm-lagoon)]/80">Plan de la fiche</p>
+	<ul class="mt-4 space-y-2 text-sm">
+		{sections.map((section) => (
+			<li>
+				<a class="text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`#${section.id}`}>
+					{section.title}
+				</a>
+			</li>
+		))}
+	</ul>
+
+	<div class="mt-6 border-t border-white/10 pt-4">
+		<p class="text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)]">Autres fiches</p>
+		<ul class="mt-3 space-y-2 text-sm">
+			{pages.map((page) => {
+				const cleanSlug = page.slug.replace(/^\//, '').replace(/\/$/, '');
+				return (
+					<li>
+						<a
+							class={cleanSlug === currentSlug ? 'font-semibold text-[var(--tm-text)]' : 'text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]'}
+							href={`${pagePrefix}${cleanSlug}/`}
+						>
+							{page.title}
+						</a>
+					</li>
+				);
+			})}
+		</ul>
+	</div>
+</aside>
