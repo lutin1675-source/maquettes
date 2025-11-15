@@ -19,59 +19,68 @@ const base = import.meta.env.BASE_URL || '/';
 
 <Layout title={pageTitle} description={model.summary}>
 	<SiteChrome className="space-y-10">
-		<nav class="text-xs uppercase tracking-[0.3em] text-base-content/60">
-			<a class="a-01" href={base}>Accueil</a>
-			<span class="px-2 text-base-content/40">/</span>
+		<nav class="text-xs uppercase tracking-[0.3em] text-[var(--tm-muted)]">
+			<a class="text-[var(--tm-lagoon)]" href={base}>Accueil</a>
+			<span class="px-2 text-[var(--tm-muted)]/60">/</span>
 			<span>{model.modelName}</span>
 		</nav>
 
-		<section class="grid gap-6 rounded-[2rem] border border-base-300 bg-base-100 p-8 shadow-sm md:grid-cols-2">
-			<div class="space-y-2">
-				<p class="brand-pill text-base-content/60">{model.manufacturer || 'Toton Maquette'}</p>
-				<h1 class="text-4xl leading-tight">{model.modelName}</h1>
-				{model.reference && <p class="text-base-content/60">Référence {model.reference}</p>}
-				<p class="text-base-content/70">
+		<section class="grid gap-6 md:grid-cols-2">
+			<div class="tm-panel rounded-[2rem] p-8">
+				<p class="brand-pill text-[var(--tm-lagoon)]/80">{model.manufacturer || 'Toton Maquette'}</p>
+				<h1 class="mt-4 text-4xl leading-tight">{model.modelName}</h1>
+				{model.reference && <p class="text-[var(--tm-muted)]">Référence {model.reference}</p>}
+				<p class="mt-4 text-[var(--tm-muted)]">
 					{model.summary ||
 						'Retrouve dans cette fiche tout l’historique pertinent, les références de peinture fiables et les corrections atelier recommandées.'}
 				</p>
 			</div>
-			<div class="rounded-2xl border border-base-200 bg-base-200/40 p-5">
-				<ul class="space-y-2 text-sm">
-					<li class="flex items-center justify-between border-b border-base-200 pb-2">
-						<span class="text-base-content/60">Slug</span>
+			<div class="tm-panel rounded-[2rem] p-6">
+				<ul class="space-y-3 text-sm">
+					<li class="flex items-center justify-between border-b border-white/10 pb-3">
+						<span class="text-[var(--tm-muted)]">Slug</span>
 						<span class="font-semibold">{model.slug}</span>
 					</li>
-					<li class="flex items-center justify-between border-b border-base-200 pb-2">
-						<span class="text-base-content/60">Sections documentées</span>
+					<li class="flex items-center justify-between border-b border-white/10 pb-3">
+						<span class="text-[var(--tm-muted)]">Sections documentées</span>
 						<span class="font-semibold">{model.docs.length}</span>
 					</li>
 					<li class="flex items-center justify-between">
-						<span class="text-base-content/60">Dernière mise à jour</span>
+						<span class="text-[var(--tm-muted)]">Dernière mise à jour</span>
 						<span class="font-semibold">{new Date().toLocaleDateString('fr-FR')}</span>
 					</li>
 				</ul>
-				<a class="btn btn-primary btn-block mt-4" href="mailto:bonjour@toton-maquette.com">
+				<a
+					class="mt-5 inline-flex w-full items-center justify-center rounded-full bg-[var(--tm-coral)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-slate-950"
+					href="mailto:bonjour@toton-maquette.com"
+				>
 					Partager un retour de montage
 				</a>
 			</div>
 		</section>
 
-		<aside class="rounded-2xl border border-base-300 bg-base-100 p-6 shadow-sm">
-			<p class="section-label">Sections</p>
+		<aside class="tm-panel rounded-2xl p-6">
+			<p class="section-label text-[var(--tm-lagoon)]">Sections</p>
 			<ul class="mt-4 space-y-2">
 				{model.docs.map((doc) => (
 					<li>
-						<a class="a-01 font-semibold" href={`#${slugifyText(doc.title)}`}>{doc.title}</a>
+						<a class="font-semibold text-[var(--tm-text)] hover:text-[var(--tm-lumen)]" href={`#${slugifyText(doc.title)}`}>
+							{doc.title}
+						</a>
 					</li>
 				))}
 			</ul>
 		</aside>
 
 		{model.docs.map((doc) => (
-			<section id={slugifyText(doc.title)} class="scroll-mt-32 rounded-[2rem] border border-base-300 bg-base-100 p-8 shadow-sm">
+			<section id={slugifyText(doc.title)} class="tm-panel scroll-mt-32 rounded-[2rem] p-8">
 				<div class="mb-6 flex items-center justify-between gap-4">
 					<h2 class="text-3xl">{doc.title}</h2>
-					<a class="text-sm uppercase tracking-[0.3em] text-primary" href={`#${slugifyText(doc.title)}`} aria-label={`Lien vers ${doc.title}`}>
+					<a
+						class="text-sm uppercase tracking-[0.3em] text-[var(--tm-lagoon)]"
+						href={`#${slugifyText(doc.title)}`}
+						aria-label={`Lien vers ${doc.title}`}
+					>
 						#
 					</a>
 				</div>

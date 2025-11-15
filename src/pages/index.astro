@@ -28,52 +28,84 @@ const methodology = [
 			'Les retours de montage (clubs, concours, forums) sont synthétisés en checklists pour anticiper ajustements et séquences de peinture.',
 	},
 ];
+const heroVisual = 'https://images.unsplash.com/photo-1476610182048-b716b8518aae?auto=format&fit=crop&w=1200&q=80';
+const referenceShots = [
+	{
+		title: 'Boeing 737 NG',
+		subtitle: 'Walkaround Istanbul',
+		image: 'https://images.unsplash.com/photo-1467951591042-f388365db261?auto=format&fit=crop&w=1200&q=80',
+	},
+	{
+		title: 'Airbus A320neo',
+		subtitle: 'Line check Europe',
+		image: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80',
+	},
+	{
+		title: 'Atelier résine',
+		subtitle: 'Corrections fuselage',
+		image: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80',
+	},
+];
 ---
 
 <Layout title="Toton Maquette" description="Catalogue documenté de maquettes statiques.">
 	<SiteChrome className="space-y-12">
-		<section class="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-			<article class="rounded-[2rem] border border-base-300 bg-base-100 p-8 shadow-sm">
-				<p class="section-label">Observatoire Toton</p>
-				<h1 class="mt-3 text-4xl leading-tight text-base-content lg:text-5xl">
-					Briefings techniques prêts à l’emploi pour maquettistes exigeants
-				</h1>
-				<p class="mt-6 text-lg text-base-content/80">
-					Chaque fiche compile historique, inventaire matériel, visuels de référence et gestes atelier. Les sources sont
-					systématiquement vérifiées (constructeurs, IPMS, clubs, photothèques officielles) avant publication.
-				</p>
-				<div class="mt-8 flex flex-wrap items-center gap-4 text-sm font-semibold uppercase tracking-[0.3em] text-base-content/60">
-					<a class="btn btn-primary btn-wide tracking-[0.2em]" href={`${base}models/`}>
-						Consulter le catalogue
-					</a>
-					<span>Catalogue mis à jour à chaque montage</span>
+		<section class="grid gap-6 lg:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)]">
+			<article class="tm-gradient-border">
+				<div class="tm-panel rounded-[2rem] p-8">
+					<p class="section-label text-[var(--tm-lagoon)]">Observatoire Toton</p>
+					<h1 class="mt-4 text-4xl leading-tight lg:text-5xl">
+						Briefings techniques prêts à l’emploi pour maquettistes exigeants
+					</h1>
+					<p class="mt-6 text-base text-[var(--tm-muted)]">
+						Chaque fiche compile historique, inventaire matériel, visuels de référence et gestes atelier. Les sources sont vérifiées auprès des constructeurs,
+						des centres IPMS et des réseaux de clubs avant publication pour garantir des montages rigoureux.
+					</p>
+					<div class="mt-8 flex flex-wrap items-center gap-4 text-[0.7rem] font-semibold uppercase tracking-[0.35em] text-[var(--tm-muted)]">
+						<a
+							class="inline-flex items-center gap-2 rounded-full bg-[var(--tm-lagoon)] px-8 py-3 text-slate-950 shadow-[0_20px_40px_rgba(43,217,197,0.4)]"
+							href={`${base}models/`}
+						>
+							Consulter le catalogue
+						</a>
+						<span>Catalogue mis à jour à chaque montage</span>
+					</div>
 				</div>
 			</article>
 
 			{featuredModel ? (
-				<aside class="flex flex-col justify-between rounded-[2rem] bg-primary px-7 py-8 text-primary-content">
+				<aside class="tm-panel flex flex-col justify-between rounded-[2rem] p-7">
 					<div>
-						<p class="brand-pill text-primary-content/70">Fiche en avant</p>
+						<p class="brand-pill text-[var(--tm-lumen)]/70">Fiche en avant</p>
 						<h2 class="mt-4 text-3xl leading-tight">{featuredModel.modelName}</h2>
 						{featuredModel.reference && (
-							<p class="mt-1 text-lg font-semibold">Référence {featuredModel.reference}</p>
+							<p class="mt-2 text-sm uppercase tracking-[0.35em] text-[var(--tm-muted)]">Référence {featuredModel.reference}</p>
 						)}
-						<p class="mt-4 text-primary-content/80">
+						<p class="mt-4 text-[var(--tm-muted)]">
 							{featuredModel.summary || `Consulte la fiche pour découvrir l’intégralité des ressources.`}
 						</p>
 					</div>
-					<a class="btn btn-outline mt-6 w-full border-primary-content text-primary-content" href={`${base}models/${featuredModel.slug}/`}>
-						Ouvrir la fiche
-					</a>
+					<div>
+						<figure class="mt-6 overflow-hidden rounded-[1.6rem] border border-white/10">
+							<img src={heroVisual} alt="Visuel de référence avion civil" loading="lazy" />
+							<figcaption class="bg-black/60 px-4 py-2 text-xs uppercase tracking-[0.4em]">Visuel repère 2026</figcaption>
+						</figure>
+						<a
+							class="mt-6 inline-flex w-full items-center justify-center rounded-full border border-white/40 px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em]"
+							href={`${base}models/${featuredModel.slug}/`}
+						>
+							Ouvrir la fiche
+						</a>
+					</div>
 				</aside>
 			) : null}
 		</section>
 
 		<section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
 			{methodology.map((item) => (
-				<article class="rounded-2xl border border-base-300 bg-base-100 p-6 shadow-sm">
-					<p class="section-label text-primary/70">{item.title}</p>
-					<p class="mt-3 text-base-content/80">{item.copy}</p>
+				<article class="tm-panel rounded-2xl p-6">
+					<p class="section-label text-[var(--tm-lagoon)]/80">{item.title}</p>
+					<p class="mt-3 text-[var(--tm-muted)]">{item.copy}</p>
 				</article>
 			))}
 		</section>
@@ -83,37 +115,61 @@ const methodology = [
 				<div>
 					<p class="section-label">Catalogue disponible</p>
 					<h2 class="text-3xl leading-tight">Fiches prêtes à l’emploi</h2>
-					<p class="text-base-content/70">Les références s’ajoutent au fil des montages en cours.</p>
+					<p class="text-[var(--tm-muted)]">Les références s’ajoutent au fil des montages en cours.</p>
 				</div>
-				<a class="btn btn-outline" href="mailto:bonjour@toton-maquette.com">Proposer une maquette</a>
+				<a
+					class="inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]"
+					href="mailto:bonjour@toton-maquette.com"
+				>
+					Proposer une maquette
+				</a>
 			</div>
 			<div class="card-grid">
 				{models.map((model) => (
-					<article class="flex flex-col rounded-2xl border border-base-300 bg-base-100 p-6 shadow-sm">
+					<article class="tm-panel flex flex-col rounded-2xl p-6">
 						<div class="space-y-2">
-							<p class="text-xs font-semibold uppercase tracking-[0.3em] text-base-content/60">
+							<p class="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--tm-muted)]">
 								{model.manufacturer || 'Toton Maquette'}
 							</p>
 							<h3 class="text-2xl">{model.modelName}</h3>
-							{model.reference && <p class="text-sm text-base-content/60">Référence {model.reference}</p>}
-							<p class="text-base-content/80">{model.summary || 'Consulte la fiche pour découvrir le contenu complet.'}</p>
+							{model.reference && <p class="text-sm text-[var(--tm-muted)]">Référence {model.reference}</p>}
+							<p class="text-[var(--tm-muted)]">{model.summary || 'Consulte la fiche pour découvrir le contenu complet.'}</p>
 						</div>
-						<div class="mt-6 flex items-center justify-between text-sm text-base-content/60">
+						<a
+							class="mt-6 inline-flex items-center justify-between rounded-full border border-white/10 px-4 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]"
+							href={`${base}models/${model.slug}/`}
+						>
 							<span>{model.docs.length} sections documentées</span>
-							<a class="btn btn-sm btn-primary" href={`${base}models/${model.slug}/`}>
-								Voir la fiche
-							</a>
-						</div>
+							<span class="text-[var(--tm-lagoon)]">→</span>
+						</a>
 					</article>
 				))}
 			</div>
 		</section>
 
+		<section class="space-y-6">
+			<div>
+				<p class="section-label text-[var(--tm-lagoon)]">Visuels en observation</p>
+				<h2 class="text-3xl leading-tight">Moodboard atelier</h2>
+				<p class="text-[var(--tm-muted)]">
+					Images temporaires issues de banques libres pour cadrer les ambiances : elles seront remplacées par nos photos de montage et nos walkarounds propriétaires.
+				</p>
+			</div>
+			<div class="tm-gallery">
+				{referenceShots.map((shot) => (
+					<figure>
+						<img src={shot.image} alt={`${shot.title} – ${shot.subtitle}`} loading="lazy" />
+						<figcaption>{shot.title} – {shot.subtitle}</figcaption>
+					</figure>
+				))}
+			</div>
+		</section>
+
 		<section class="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-			<div class="rounded-[2rem] border border-base-300 bg-base-100 p-8 shadow-sm">
+			<div class="tm-panel rounded-[2rem] p-8">
 				<p class="section-label">Mode opératoire</p>
 				<h2 class="mt-3 text-3xl">Comment nous montons une fiche</h2>
-				<ul class="mt-6 space-y-3 text-base-content/80">
+				<ul class="mt-6 space-y-3 text-[var(--tm-muted)]">
 					<li>
 						<strong>1.</strong> Repérage des sources (constructeurs, walkarounds, retours concours, archives compagnies).
 					</li>
@@ -128,14 +184,19 @@ const methodology = [
 					</li>
 				</ul>
 			</div>
-			<div class="rounded-[2rem] border border-primary/30 bg-gradient-to-br from-primary/10 via-base-100 to-base-100 p-8">
+			<div class="rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_top,#31216b,#120d26)] p-8">
 				<p class="section-label">Accompagnement</p>
 				<h2 class="mt-3 text-3xl">Besoin d’un dossier spécifique ?</h2>
-				<p class="mt-4 text-base-content/80">
+				<p class="mt-4 text-[var(--tm-muted)]">
 					Nous priorisons les fiches selon les demandes de la communauté. Partage tes besoins (compagnie, version, échelle) et nous
 					répondrons avec un plan de documentation précis.
 				</p>
-				<a class="btn btn-primary mt-6" href="mailto:bonjour@toton-maquette.com">Demander une fiche</a>
+				<a
+					class="mt-6 inline-flex rounded-full bg-[var(--tm-coral)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-slate-950 shadow-[0_20px_40px_rgba(255,143,101,0.35)]"
+					href="mailto:bonjour@toton-maquette.com"
+				>
+					Demander une fiche
+				</a>
 			</div>
 		</section>
 	</SiteChrome>
