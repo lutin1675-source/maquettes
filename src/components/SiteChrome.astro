@@ -97,25 +97,51 @@ const year = new Date().getFullYear();
 		light: 'Mode sombre',
 	};
 
-	function applyTheme(theme) {
-		root.setAttribute('data-theme', theme);
+	const syncToggleLabel = (theme) => {
+		if (!toggleBtn || !theme) return;
+		toggleBtn.textContent = labels[theme];
+		toggleBtn.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+	};
+
+	const getActiveTheme = () => {
+		if (window.tmTheme?.get) {
+			return window.tmTheme.get();
+		}
+		const attrTheme = root.getAttribute('data-theme');
+		if (attrTheme) return attrTheme;
+		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+	};
+
+	const fallbackPersist = (theme) => {
 		try {
 			localStorage.setItem(THEME_KEY, theme);
 		} catch (err) {
 			console.warn('Impossible de stocker le thème', err);
 		}
-		if (toggleBtn) {
-			toggleBtn.textContent = labels[theme];
-			toggleBtn.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+	};
+
+	const setTheme = (theme) => {
+		if (window.tmTheme?.set) {
+			window.tmTheme.set(theme);
+			return;
 		}
-	}
+		root.setAttribute('data-theme', theme);
+		fallbackPersist(theme);
+		window.dispatchEvent(new CustomEvent('tm-theme-change', { detail: theme }));
+	};
 
 	if (toggleBtn) {
-		const currentTheme = root.getAttribute('data-theme') || 'dark';
-		applyTheme(currentTheme);
+		syncToggleLabel(getActiveTheme());
+
+		window.addEventListener('tm-theme-change', (event) => {
+			if (event?.detail) {
+				syncToggleLabel(event.detail);
+			}
+		});
+
 		toggleBtn.addEventListener('click', () => {
-			const nextTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-			applyTheme(nextTheme);
+			const next = getActiveTheme() === 'dark' ? 'light' : 'dark';
+			setTheme(next);
 		});
 	}
 </script>

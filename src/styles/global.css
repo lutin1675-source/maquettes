@@ -169,12 +169,12 @@
 
 @layer components {
   .brand-pill {
-    @apply uppercase tracking-[0.4em] text-xs font-semibold;
+    @apply uppercase tracking-[0.25em] text-xs font-semibold;
     color: var(--tm-pill);
   }
 
   .section-label {
-    @apply uppercase text-xs tracking-[0.3em] text-primary/80 font-semibold;
+    @apply uppercase text-xs tracking-[0.22em] text-primary/80 font-semibold;
   }
 
   .card-grid {

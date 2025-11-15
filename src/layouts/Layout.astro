@@ -12,21 +12,70 @@ const pageDescription = Astro.props?.description ?? SITE.description;
 const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname;
 const themeScript = `
 (() => {
-	try {
-		const storageKey = 'tm-theme';
-		const stored = localStorage.getItem(storageKey);
-		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-		const theme = stored || (prefersDark ? 'dark' : 'light');
-		document.documentElement.setAttribute('data-theme', theme);
-	} catch (err) {
-		console.warn('Impossible de déterminer le thème', err);
+	const storageKey = 'tm-theme';
+	const root = document.documentElement;
+	const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+	const readStoredTheme = () => {
+		try {
+			return localStorage.getItem(storageKey);
+		} catch (err) {
+			console.warn('Stockage thème inaccessible', err);
+			return null;
+		}
+	};
+
+	const setTheme = (theme, persist = false) => {
+		root.setAttribute('data-theme', theme);
+		window.dispatchEvent(new CustomEvent('tm-theme-change', { detail: theme }));
+
+		if (persist) {
+			try {
+				localStorage.setItem(storageKey, theme);
+			} catch (err) {
+				console.warn('Impossible de stocker le thème', err);
+			}
+		}
+	};
+
+	const stored = readStoredTheme();
+	if (stored) {
+		setTheme(stored);
+	} else {
+		setTheme(mediaQuery.matches ? 'dark' : 'light');
+		const mediaListener = (event) => {
+			if (!readStoredTheme()) {
+				setTheme(event.matches ? 'dark' : 'light');
+			}
+		};
+		if (typeof mediaQuery.addEventListener === 'function') {
+			mediaQuery.addEventListener('change', mediaListener);
+		} else if (typeof mediaQuery.addListener === 'function') {
+			mediaQuery.addListener(mediaListener);
+		}
 	}
+
+	window.tmTheme = {
+		set(theme) {
+			setTheme(theme, true);
+		},
+		get() {
+			return root.getAttribute('data-theme') || 'dark';
+		},
+		clear() {
+			try {
+				localStorage.removeItem(storageKey);
+			} catch (err) {
+				console.warn('Impossible de nettoyer le thème', err);
+			}
+		},
+	};
 })();
 `;
 ---
 
 <!doctype html>
-<html lang="fr" data-theme="dark">
+<html lang="fr">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
