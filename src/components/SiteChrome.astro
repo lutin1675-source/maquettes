@@ -7,13 +7,23 @@ const year = new Date().getFullYear();
 ---
 
 	<div class="tm-shell flex min-h-screen flex-col">
-		<header class="shadow-[0_12px_25px_rgba(2,4,12,0.4)]">
+		<header class="tm-header">
 		<div class="tm-header-bar">
 			<div class="container flex flex-wrap items-center justify-between gap-3 px-4 py-2 text-[0.65rem] uppercase tracking-[0.35em] text-[var(--tm-muted)] sm:text-xs">
 				<p>{SITE.tagline}</p>
-				<a class="font-semibold text-[var(--tm-lumen)] hover:text-[var(--tm-lagoon)]" href={`mailto:${SITE.email}`}>
-					Contact {SITE.email}
-				</a>
+				<div class="flex flex-wrap items-center gap-3">
+					<a class="font-semibold text-[var(--tm-lumen)] hover:text-[var(--tm-lagoon)]" href={`mailto:${SITE.email}`}>
+						Contact {SITE.email}
+					</a>
+					<button
+						type="button"
+						data-theme-toggle
+						class="rounded-full border border-white/30 px-3 py-1 text-[0.55rem] font-semibold uppercase tracking-[0.4em] text-[var(--tm-muted)] transition-colors hover:text-[var(--tm-lumen)]"
+						aria-pressed="false"
+					>
+						Mode clair
+					</button>
+				</div>
 			</div>
 		</div>
 
@@ -77,3 +87,35 @@ const year = new Date().getFullYear();
 		</div>
 	</footer>
 </div>
+
+<script is:inline>
+	const THEME_KEY = 'tm-theme';
+	const toggleBtn = document.querySelector('[data-theme-toggle]');
+	const root = document.documentElement;
+	const labels = {
+		dark: 'Mode clair',
+		light: 'Mode sombre',
+	};
+
+	function applyTheme(theme) {
+		root.setAttribute('data-theme', theme);
+		try {
+			localStorage.setItem(THEME_KEY, theme);
+		} catch (err) {
+			console.warn('Impossible de stocker le thème', err);
+		}
+		if (toggleBtn) {
+			toggleBtn.textContent = labels[theme];
+			toggleBtn.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+		}
+	}
+
+	if (toggleBtn) {
+		const currentTheme = root.getAttribute('data-theme') || 'dark';
+		applyTheme(currentTheme);
+		toggleBtn.addEventListener('click', () => {
+			const nextTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+			applyTheme(nextTheme);
+		});
+	}
+</script>

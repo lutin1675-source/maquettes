@@ -34,7 +34,7 @@ const latestModels = modelEntries.sort((a, b) => a.data.title.localeCompare(b.da
 						<div class="flex flex-wrap items-center justify-between gap-3">
 							<div>
 								<p class="text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)]">Section</p>
-								<h3 class="text-2xl">{entry.data.title}</h3>
+								<h3 class="tm-card-title text-2xl">{entry.data.title}</h3>
 							</div>
 							<a class="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.3em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}atelier/${entry.slug}/`}>
 								Ouvrir <span class="text-[var(--tm-lagoon)]">→</span>
@@ -67,7 +67,7 @@ const latestModels = modelEntries.sort((a, b) => a.data.title.localeCompare(b.da
 					{latestModels.map((entry) => (
 						<article class="rounded-xl border border-white/10 p-4">
 							<p class="text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)]">{entry.data.manufacturer || 'Fabricant'}</p>
-							<h3 class="mt-2 text-xl">{entry.data.title}</h3>
+							<h3 class="tm-card-title mt-2 text-xl">{entry.data.title}</h3>
 							<p class="text-sm text-[var(--tm-muted)]">
 								{entry.data.scale ? `Échelle ${entry.data.scale}` : null} {entry.data.reference ? `· Réf. ${entry.data.reference}` : ''}
 							</p>

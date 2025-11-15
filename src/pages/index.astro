@@ -84,7 +84,7 @@ const spotlight = {
 	<SiteChrome className="space-y-12">
 		<section class="grid gap-6 lg:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)]">
 			<article class="tm-panel tm-hero-panel rounded-xl p-8">
-				<p class="section-label text-[var(--tm-lagoon)]">Observatoire Toton</p>
+				<p class="section-label tm-accent">Observatoire Toton</p>
 				<h1 class="mt-4 text-4xl leading-tight lg:text-5xl">
 					Hub L’Atelier + Banc d’essai pour maquettistes exigeants
 				</h1>
@@ -93,10 +93,10 @@ const spotlight = {
 					analyse kits, outils et comparatifs. Toutes les données sont vérifiées (constructeurs, IPMS, clubs) avant publication.
 				</p>
 				<div class="mt-8 flex flex-wrap items-center gap-4 text-[0.7rem] font-semibold uppercase tracking-[0.35em] text-[var(--tm-muted)]">
-					<a class="inline-flex items-center gap-2 rounded-full bg-[var(--tm-lagoon)] px-8 py-3 text-slate-950 shadow-[0_10px_22px_rgba(43,217,197,0.3)]" href={`${base}atelier/`}>
+					<a class="tm-button-primary inline-flex items-center gap-2 rounded-full bg-[var(--tm-lagoon)] px-8 py-3 text-slate-950" href={`${base}atelier/`}>
 						Découvrir L’Atelier
 					</a>
-					<a class="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-xs text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}banc-dessai/`}>
+					<a class="tm-button-outline inline-flex items-center gap-2 rounded-full border px-6 py-3 text-xs text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}banc-dessai/`}>
 						Le Banc d’essai
 					</a>
 				</div>
@@ -104,7 +104,7 @@ const spotlight = {
 
 			<aside class="tm-panel flex flex-col justify-between rounded-xl p-7">
 				<div>
-					<p class="brand-pill text-[var(--tm-lumen)]/70">{heroAside.title}</p>
+					<p class="brand-pill">{heroAside.title}</p>
 					<p class="mt-4 text-[var(--tm-muted)]">{heroAside.description}</p>
 					<ul class="mt-4 space-y-2 text-sm text-[var(--tm-muted)]">
 						{heroAside.points.map((point) => (
@@ -129,7 +129,7 @@ const spotlight = {
 
 		<section class="space-y-6">
 			<div>
-				<p class="section-label text-[var(--tm-lagoon)]">L’Atelier</p>
+				<p class="section-label tm-accent">L’Atelier</p>
 				<h2 class="text-3xl leading-tight">Découvrir l’espace pédagogique</h2>
 				<p class="text-[var(--tm-muted)]">Journal, tutoriels, chroniques et dossiers historiques réunis en un même hub.</p>
 			</div>
@@ -137,7 +137,7 @@ const spotlight = {
 				{atelierHighlights.map((highlight) => (
 					<article class="tm-panel flex flex-col rounded-xl p-6">
 						<p class="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--tm-muted)]">{highlight.meta}</p>
-						<h3 class="mt-2 text-2xl">{highlight.title}</h3>
+						<h3 class="tm-card-title mt-2 text-2xl">{highlight.title}</h3>
 						<p class="mt-3 text-[var(--tm-muted)]">{highlight.description}</p>
 						<a class="mt-6 inline-flex items-center justify-between rounded-full border border-white/10 px-4 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}${highlight.link}`}>
 							<span>Ouvrir</span>
@@ -151,11 +151,11 @@ const spotlight = {
 		<section class="space-y-6">
 			<div class="flex flex-wrap items-end justify-between gap-4">
 				<div>
-					<p class="section-label">Le Banc d’essai</p>
+					<p class="section-label tm-accent">Le Banc d’essai</p>
 					<h2 class="text-3xl leading-tight">Derniers tests</h2>
 					<p class="text-[var(--tm-muted)]">Kits, outils et comparatifs passés au crible.</p>
 				</div>
-				<a class="inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}banc-dessai/`}>
+				<a class="tm-button-outline inline-flex items-center gap-2 rounded-full border px-5 py-2 text-xs uppercase tracking-[0.35em] text-[var(--tm-muted)] hover:text-[var(--tm-lumen)]" href={`${base}banc-dessai/`}>
 					Accéder à tous les tests
 				</a>
 			</div>
@@ -163,7 +163,7 @@ const spotlight = {
 				{latestTests.map((test) => (
 					<article class="tm-panel flex flex-col rounded-xl p-6">
 						<p class="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--tm-muted)]">{test.type}</p>
-						<h3 class="mt-2 text-2xl">{test.title}</h3>
+						<h3 class="tm-card-title mt-2 text-2xl">{test.title}</h3>
 						<p class="mt-3 text-[var(--tm-muted)]">{test.summary}</p>
 						<ul class="mt-4 space-y-1 text-sm text-[var(--tm-muted)]">
 							{test.tags.map((tag) => (
@@ -181,7 +181,7 @@ const spotlight = {
 
 		<section class="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
 			<div class="tm-panel rounded-xl p-8">
-				<p class="section-label">Suivre ma progression</p>
+				<p class="section-label tm-accent">Suivre ma progression</p>
 				<h2 class="mt-3 text-3xl">Journal structuré étape par étape</h2>
 				<p class="mt-4 text-[var(--tm-muted)]">
 					Chaque phase est documentée pour comprendre les blocages et capitaliser sur les solutions. Les entrées renvoient vers les tutoriels ou
@@ -194,12 +194,12 @@ const spotlight = {
 						</li>
 					))}
 				</ul>
-				<a class="mt-6 inline-flex rounded-full bg-[var(--tm-coral)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-slate-950 shadow-[0_10px_22px_rgba(255,143,101,0.3)]" href={`${base}atelier/journal-de-progression/`}>
+				<a class="tm-button-primary mt-6 inline-flex rounded-full bg-[var(--tm-coral)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.4em] text-slate-950" href={`${base}atelier/journal-de-progression/`}>
 					Consulter le journal
 				</a>
 			</div>
 			<div class="tm-promo-panel rounded-xl border border-white/10 p-8">
-				<p class="section-label">À la une</p>
+				<p class="section-label tm-accent">À la une</p>
 				<h2 class="mt-3 text-3xl">{spotlight.title}</h2>
 				<p class="mt-4 text-[var(--tm-muted)]">{spotlight.copy}</p>
 				<ul class="mt-4 space-y-1 text-sm text-[var(--tm-muted)]">
